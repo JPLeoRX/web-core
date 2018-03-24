@@ -1,0 +1,15 @@
+<mat-card>Examples</mat-card>
+
+<mat-accordion class="example-headers-align">
+  <mat-expansion-panel *ngFor="let example of examples">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{ example.exampleId }}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <p>
+      {{ example.text }}
+    </p>
+  </mat-expansion-panel>
+</mat-accordion>
