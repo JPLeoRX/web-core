@@ -4,6 +4,8 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 /**
+ * Util class to ease time related operations
+ *
  * @author Leo Ertuna
  * @since 24.03.2018 14:02
  */

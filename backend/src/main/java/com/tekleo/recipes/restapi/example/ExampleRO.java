@@ -5,6 +5,10 @@ import com.tekleo.recipes.api.example.ExampleAO;
 import java.io.Serializable;
 
 /**
+ * Sample Rest Object
+ *
+ * It is used to transfer data from backend to frontend via REST api
+ *
  * @author Leo Ertuna
  * @since 24.03.2018 15:53
  */
@@ -12,6 +16,8 @@ public class ExampleRO implements Serializable {
     private String exampleId;
     private String text;
     private long createdAt;
+
+
 
     // Constructors
     //------------------------------------------------------------------------------------------------------------------

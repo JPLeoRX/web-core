@@ -9,6 +9,11 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 
 /**
+ * Sample API Object
+ *
+ * It will be used during all interactions with API
+ * Can be a pretty complex object with many nested classes
+ *
  * @author Leo Ertuna
  * @since 24.03.2018 15:32
  */

@@ -9,6 +9,10 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 
 /**
+ * Sample Business Object
+ *
+ * It is used as a middle layer between the API and the database
+ *
  * @author Leo Ertuna
  * @since 24.03.2018 13:59
  */

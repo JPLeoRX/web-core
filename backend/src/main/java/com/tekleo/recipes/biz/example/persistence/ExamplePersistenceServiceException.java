@@ -1,10 +1,12 @@
 package com.tekleo.recipes.biz.example.persistence;
 
+import com.tekleo.recipes.shared.exceptions.PersistenceServiceException;
+
 /**
  * @author Leo Ertuna
  * @since 24.03.2018 14:28
  */
-public final class ExamplePersistenceServiceException extends Exception {
+public final class ExamplePersistenceServiceException extends PersistenceServiceException {
     public ExamplePersistenceServiceException() {
 
     }

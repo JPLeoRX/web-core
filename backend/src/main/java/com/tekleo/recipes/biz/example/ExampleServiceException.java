@@ -1,10 +1,12 @@
 package com.tekleo.recipes.biz.example;
 
+import com.tekleo.recipes.shared.exceptions.ServiceException;
+
 /**
  * @author Leo Ertuna
  * @since 24.03.2018 15:01
  */
-public final class ExampleServiceException extends Exception {
+public final class ExampleServiceException extends ServiceException {
     public ExampleServiceException() {
 
     }

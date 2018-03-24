@@ -12,6 +12,12 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 /**
+ * Sample persistence service implementation
+ *
+ * This class is a Spring service {@link Service} with access to the database {@link Transactional}
+ *
+ * Database operations occur using {@link EntityManager}
+ *
  * @author Leo Ertuna
  * @since 24.03.2018 14:32
  */
@@ -23,6 +29,10 @@ public class ExamplePersistenceServiceImpl implements ExamplePersistenceService 
 
     @Override
     public ExampleBO getExample(ExampleId exampleId) throws ExamplePersistenceServiceException {
+        // Check for null arguments
+        if (exampleId == null)
+            throw new ExamplePersistenceServiceException("Id is null");
+
         // Find DO
         ExampleDO found = entityManager.find(ExampleDO.class, exampleId.getInternalId());
 
@@ -48,6 +58,10 @@ public class ExamplePersistenceServiceImpl implements ExamplePersistenceService 
 
     @Override
     public ExampleBO addExample(ExampleBO newEntity) throws ExamplePersistenceServiceException {
+        // Check for null arguments
+        if (newEntity == null)
+            throw new ExamplePersistenceServiceException("New entity is null");
+
         // Create DO
         ExampleDO toAdd = new ExampleDO(newEntity);
 
@@ -60,6 +74,10 @@ public class ExamplePersistenceServiceImpl implements ExamplePersistenceService 
 
     @Override
     public ExampleBO updateExample(ExampleBO updatedEntity) throws ExamplePersistenceServiceException {
+        // Check for null arguments
+        if (updatedEntity == null)
+            throw new ExamplePersistenceServiceException("Updated entity is null");
+
         // Find DO
         ExampleDO found = entityManager.find(ExampleDO.class, updatedEntity.getExampleId().getInternalId());
 
@@ -79,6 +97,10 @@ public class ExamplePersistenceServiceImpl implements ExamplePersistenceService 
 
     @Override
     public ExampleBO deleteExample(ExampleId exampleId) throws ExamplePersistenceServiceException {
+        // Check for null arguments
+        if (exampleId == null)
+            throw new ExamplePersistenceServiceException("Id is null");
+
         // Find DO
         ExampleDO toDelete = entityManager.find(ExampleDO.class, exampleId.getInternalId());
 

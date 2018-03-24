@@ -1,6 +1,6 @@
 package com.tekleo.recipes.biz.example;
 
-import com.tekleo.recipes.shared.AbstractConverterDOBO;
+import com.tekleo.recipes.shared.converters.AbstractConverterDOBO;
 import com.tekleo.recipes.biz.example.persistence.ExampleDO;
 import com.tekleo.recipes.shared.id.ExampleId;
 

@@ -1,10 +1,10 @@
 package com.tekleo.recipes.api.example;
 
 import com.tekleo.recipes.biz.example.ExampleBO;
-import com.tekleo.recipes.shared.AbstractConverterBOAO;
+import com.tekleo.recipes.shared.converters.AbstractConverterBOAO;
 
 /**
- * Simple converter to switch between AO and BO objects
+ * Simple converter to switch between BO and AO objects
  *
  * @author Leo Ertuna
  * @since 24.03.2018 15:32

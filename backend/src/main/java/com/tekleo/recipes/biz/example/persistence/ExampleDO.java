@@ -7,6 +7,10 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 /**
+ * Sample Database Object
+ *
+ * It is used to interact with the database
+ *
  * @author Leo Ertuna
  * @since 24.03.2018 13:59
  */
@@ -14,6 +18,7 @@ import java.io.Serializable;
 @Access(AccessType.FIELD)
 @Table(name = "example")
 public class ExampleDO implements Serializable {
+    // Due to postgreSQL limitations we have to specify lowercase column names of camel case data fields
     @Id @Column(name = "exampleid") private String exampleId;
     @Column private String text;
     @Column(name = "createdat") private long createdAt;

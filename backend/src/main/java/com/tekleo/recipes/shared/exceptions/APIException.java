@@ -1,6 +1,12 @@
-package com.tekleo.recipes.shared;
+package com.tekleo.recipes.shared.exceptions;
 
-public final class APIException extends Exception {
+/**
+ * API exception
+ *
+ * @author Leo Ertuna
+ * @since 24.03.2018 18:23
+ */
+public class APIException extends Exception {
     public APIException() {
 
     }
