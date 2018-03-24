@@ -1,0 +1,5 @@
+CREATE TABLE temp
+(
+  tempId VARCHAR(128) NOT NULL,
+  PRIMARY KEY (tempId)
+);
