@@ -62,7 +62,7 @@ export class ExampleComponent implements OnInit {
       // If it was successfully added
       if (exampleAdded) {
         // Add this to the view (unshift adds to the beginning, push adds to the end)
-        this._examples.push(exampleAdded);
+        this._examples.unshift(exampleAdded);
       }
     });
   }

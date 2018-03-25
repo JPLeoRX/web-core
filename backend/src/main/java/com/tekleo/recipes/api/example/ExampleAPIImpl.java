@@ -40,7 +40,10 @@ public class ExampleAPIImpl implements ExampleAPI {
     @Override
     public List<ExampleAO> getAllExamples() throws APIException {
         try {
-            return new ExampleConverterBOAO().toAO(service.getAllExamples());
+            List<ExampleBO> exampleBOList = service.getAllExamples();
+            List<ExampleAO> exampleAOList = new ExampleConverterBOAO().toAO(exampleBOList);
+            List<ExampleAO> sortedAOList = new ExampleSort().sortByDateCreated(exampleAOList);
+            return sortedAOList;
         } catch (ExampleServiceException e) {
             throw new APIException(e);
         }
