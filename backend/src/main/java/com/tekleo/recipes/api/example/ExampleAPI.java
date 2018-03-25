@@ -26,4 +26,6 @@ public interface ExampleAPI extends AbstractAPI {
     ExampleAO updateExample(ExampleAO updatedEntity) throws APIException;
 
     ExampleAO deleteExample(ExampleId exampleId) throws APIException;
+
+    List<ExampleAO> deleteAllExamples() throws APIException;
 }

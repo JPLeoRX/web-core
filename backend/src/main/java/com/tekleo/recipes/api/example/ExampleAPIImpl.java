@@ -77,4 +77,18 @@ public class ExampleAPIImpl implements ExampleAPI {
             throw new APIException(e);
         }
     }
+
+    @Override
+    public List<ExampleAO> deleteAllExamples() throws APIException {
+        // Get all items
+        List<ExampleAO> examplesToDelete = this.getAllExamples();
+
+        // For every item
+        for (ExampleAO example : examplesToDelete)
+            // Delete it
+            this.deleteExample(example.getExampleId());
+
+        // Return deleted elements
+        return examplesToDelete;
+    }
 }
