@@ -6,7 +6,7 @@ import {BrowserModule} from "@angular/platform-browser";
 import {HttpClientModule} from "@angular/common/http";
 import {RouterModule} from "@angular/router";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   imports: [
@@ -17,11 +17,13 @@ import {FormsModule} from "@angular/forms";
     RouterModule,
     MaterialModule,
     FormsModule,
+    ReactiveFormsModule
   ],
 
   exports: [
     MaterialModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
 
   declarations: [
