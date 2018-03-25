@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs/Observable";
 import {map} from "rxjs/operators";
 import {Example} from "../models/example.model";
+import {ExampleForm} from "../models/example-form.model";
 
 /**
  * Sample Angular service to send REST requests to the backend
@@ -27,10 +28,10 @@ export class ExampleService {
     }));
   }
 
-  addExample(example: Example): Observable<Example> {
+  addExample(exampleForm: ExampleForm): Observable<Example> {
     // Extract data and prepare it for passing as JSON
     let data = {
-      text: example.text
+      text: exampleForm.text
     };
 
     // REST request
@@ -66,8 +67,19 @@ export class ExampleService {
     return this.http.delete<any>('/api/example/delete/' + example.exampleId).pipe(map(response => {
       // If response is valid
       if (response.success && response.results) {
-        // Return note obtained from backend
+        // Return result obtained from backend
         return response.results.example;
+      }
+    }));
+  }
+
+  deleteAllExamples(): Observable<Example[]> {
+    // REST request
+    return this.http.delete<any>('/api/example/deleteAll').pipe(map(response => {
+      // If response is valid
+      if (response.success && response.results) {
+        // Return result obtained from backend
+        return response.results.examples;
       }
     }));
   }

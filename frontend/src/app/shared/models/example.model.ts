@@ -26,4 +26,8 @@ export class Example {
   get createdAt(): number {
     return this._createdAt;
   }
+
+  set text(value: string) {
+    this._text = value;
+  }
 }
