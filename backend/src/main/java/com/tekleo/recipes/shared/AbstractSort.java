@@ -2,6 +2,7 @@ package com.tekleo.recipes.shared;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Helper base class for sorting
@@ -29,23 +30,19 @@ public abstract class AbstractSort<E> {
     // List sorting methods
     //------------------------------------------------------------------------------------------------------------------
     public List<E> sortByName(List<E> originalList) {
-        originalList.sort(new NameComparator());
-        return originalList;
+        return originalList.parallelStream().sorted(new NameComparator()).collect(Collectors.toList());
     }
 
     public List<E> sortByContent(List<E> originalList) {
-        originalList.sort(new ContentComparator());
-        return originalList;
+        return originalList.parallelStream().sorted(new ContentComparator()).collect(Collectors.toList());
     }
 
     public List<E> sortByDateCreated(List<E> originalList) {
-        originalList.sort(new DateCreatedComparator());
-        return originalList;
+        return originalList.parallelStream().sorted(new DateCreatedComparator()).collect(Collectors.toList());
     }
 
     public List<E> sortByDateUpdated(List<E> originalList) {
-        originalList.sort(new DateUpdatedComparator());
-        return originalList;
+        return originalList.parallelStream().sorted(new DateUpdatedComparator()).collect(Collectors.toList());
     }
     //------------------------------------------------------------------------------------------------------------------
 
