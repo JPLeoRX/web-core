@@ -1,8 +1,8 @@
 package com.tekleo.recipes.shared.converters;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Converter to switch between DO and BO objects
@@ -31,10 +31,7 @@ public abstract class AbstractConverterDOBO<DO, BO> implements Serializable {
      * @return list of DO
      */
     public List<DO> toDO(List<BO> boList) {
-        List<DO> doList = new ArrayList<>(boList.size());
-        for (BO b : boList)
-            doList.add(toDO(b));
-        return doList;
+        return boList.parallelStream().map(this::toDO).collect(Collectors.toList());
     }
 
     /**
@@ -43,9 +40,6 @@ public abstract class AbstractConverterDOBO<DO, BO> implements Serializable {
      * @return list of BO
      */
     public List<BO> toBO(List<DO> doList) {
-        List<BO> boList = new ArrayList<>(doList.size());
-        for (DO d : doList)
-            boList.add(toBO(d));
-        return boList;
+        return doList.parallelStream().map(this::toBO).collect(Collectors.toList());
     }
 }

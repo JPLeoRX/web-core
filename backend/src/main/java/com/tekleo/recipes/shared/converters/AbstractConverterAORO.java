@@ -1,8 +1,8 @@
 package com.tekleo.recipes.shared.converters;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Converter to switch between AO and RO objects
@@ -31,10 +31,7 @@ public abstract class AbstractConverterAORO<AO, RO> implements Serializable{
      * @return list of AO
      */
     public List<AO> toAO(List<RO> roList) {
-        List<AO> aoList = new ArrayList<>(roList.size());
-        for (RO r : roList)
-            aoList.add(toAO(r));
-        return aoList;
+        return roList.parallelStream().map(this::toAO).collect(Collectors.toList());
     }
 
     /**
@@ -43,9 +40,6 @@ public abstract class AbstractConverterAORO<AO, RO> implements Serializable{
      * @return list of RO
      */
     public List<RO> toRO(List<AO> aoList) {
-        List<RO> roList = new ArrayList<>(aoList.size());
-        for (AO a : aoList)
-            roList.add(toRO(a));
-        return roList;
+        return aoList.parallelStream().map(this::toRO).collect(Collectors.toList());
     }
 }
