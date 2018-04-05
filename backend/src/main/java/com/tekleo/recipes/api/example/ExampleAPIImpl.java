@@ -5,6 +5,7 @@ import com.tekleo.recipes.biz.example.ExampleService;
 import com.tekleo.recipes.biz.example.ExampleServiceException;
 import com.tekleo.recipes.shared.date_and_time.Time;
 import com.tekleo.recipes.shared.exceptions.APIException;
+import com.tekleo.recipes.shared.exceptions.StreamException;
 import com.tekleo.recipes.shared.id.ExampleId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -86,10 +87,14 @@ public class ExampleAPIImpl implements ExampleAPI {
         // Get all items
         List<ExampleAO> examplesToDelete = this.getAllExamples();
 
-        // For every item
-        for (ExampleAO example : examplesToDelete)
-            // Delete it
-            this.deleteExample(example.getExampleId());
+        // Delete every item
+        examplesToDelete.parallelStream().forEach(exampleToDelete -> {
+            try {
+                this.deleteExample(exampleToDelete.getExampleId());
+            } catch (APIException e) {
+                throw new StreamException(e);
+            }
+        });
 
         // Return deleted elements
         return examplesToDelete;
