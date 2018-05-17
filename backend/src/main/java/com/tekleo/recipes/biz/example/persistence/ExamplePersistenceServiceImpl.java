@@ -1,7 +1,7 @@
 package com.tekleo.recipes.biz.example.persistence;
 
 import com.tekleo.recipes.biz.example.ExampleBO;
-import com.tekleo.recipes.biz.example.ExampleConverterDOBO;
+import com.tekleo.recipes.converters.example.ExampleConverterDOtoBO;
 import com.tekleo.recipes.shared.id.ExampleId;
 import org.springframework.stereotype.Service;
 
@@ -28,24 +28,24 @@ public class ExamplePersistenceServiceImpl implements ExamplePersistenceService 
     private EntityManager entityManager;
 
     @Override
-    public ExampleBO getExample(ExampleId exampleId) throws ExamplePersistenceServiceException {
+    public ExampleBO get(ExampleId id) throws ExamplePersistenceServiceException {
         // Check for null arguments
-        if (exampleId == null)
+        if (id == null)
             throw new ExamplePersistenceServiceException("Id is null");
 
         // Find DO
-        ExampleDO found = entityManager.find(ExampleDO.class, exampleId.getInternalId());
+        ExampleDO found = entityManager.find(ExampleDO.class, id.getInternalId());
 
         // If none found
         if (found == null)
-            throw new ExamplePersistenceServiceException("No object found for id=" + exampleId);
+            throw new ExamplePersistenceServiceException("No object found for id=" + id);
 
         // Convert to BO
-        return new ExampleBO(found);
+        return getDOtoBOConverter().toBO(found);
     }
 
     @Override
-    public List<ExampleBO> getAllExamples() throws ExamplePersistenceServiceException {
+    public List<ExampleBO> getAll() throws ExamplePersistenceServiceException {
         // Create a query
         TypedQuery<ExampleDO> query = entityManager.createQuery("FROM ExampleDO", ExampleDO.class);
 
@@ -53,65 +53,65 @@ public class ExamplePersistenceServiceImpl implements ExamplePersistenceService 
         List<ExampleDO> results = query.getResultList();
 
         // Convert results to BO
-        return new ExampleConverterDOBO().toBO(results);
+        return new ExampleConverterDOtoBO().toBO(results);
     }
 
     @Override
-    public ExampleBO addExample(ExampleBO newEntity) throws ExamplePersistenceServiceException {
+    public ExampleBO add(ExampleBO newItem) throws ExamplePersistenceServiceException {
         // Check for null arguments
-        if (newEntity == null)
+        if (newItem == null)
             throw new ExamplePersistenceServiceException("New entity is null");
 
         // Create DO
-        ExampleDO toAdd = new ExampleDO(newEntity);
+        ExampleDO toAdd = getBOtoDOConverter().toDO(newItem);
 
         // Write to database
         entityManager.persist(toAdd);
 
         // Convert to BO
-        return new ExampleBO(toAdd);
+        return getDOtoBOConverter().toBO(toAdd);
     }
 
     @Override
-    public ExampleBO updateExample(ExampleBO updatedEntity) throws ExamplePersistenceServiceException {
+    public ExampleBO update(ExampleBO updatedItem) throws ExamplePersistenceServiceException {
         // Check for null arguments
-        if (updatedEntity == null)
+        if (updatedItem == null)
             throw new ExamplePersistenceServiceException("Updated entity is null");
 
         // Find DO
-        ExampleDO found = entityManager.find(ExampleDO.class, updatedEntity.getExampleId().getInternalId());
+        ExampleDO found = entityManager.find(ExampleDO.class, updatedItem.getExampleId().getInternalId());
 
         // If none found
         if (found == null)
-            throw new ExamplePersistenceServiceException("No object found for id=" + updatedEntity.getExampleId());
+            throw new ExamplePersistenceServiceException("No object found for id=" + updatedItem.getExampleId());
 
         // Create DO
-        ExampleDO toUpdate = new ExampleDO(updatedEntity);
+        ExampleDO toUpdate = getBOtoDOConverter().toDO(updatedItem);
 
         // Update in the database
         entityManager.merge(toUpdate);
 
         // Convert to BO
-        return new ExampleBO(toUpdate);
+        return getDOtoBOConverter().toBO(toUpdate);
     }
 
     @Override
-    public ExampleBO deleteExample(ExampleId exampleId) throws ExamplePersistenceServiceException {
+    public ExampleBO remove(ExampleBO removedItem) throws ExamplePersistenceServiceException {
         // Check for null arguments
-        if (exampleId == null)
-            throw new ExamplePersistenceServiceException("Id is null");
+        if (removedItem == null)
+            throw new ExamplePersistenceServiceException("Removed entity is null");
 
         // Find DO
-        ExampleDO toDelete = entityManager.find(ExampleDO.class, exampleId.getInternalId());
+        ExampleDO toDelete = entityManager.find(ExampleDO.class, removedItem.getExampleId().getInternalId());
 
         // If none found
         if (toDelete == null)
-            throw new ExamplePersistenceServiceException("No object found for id=" + exampleId);
+            throw new ExamplePersistenceServiceException("No object found for id=" + removedItem.getExampleId());
 
         // Delete in the database
         entityManager.remove(toDelete);
 
         // Convert to BO
-        return new ExampleBO(toDelete);
+        return getDOtoBOConverter().toBO(toDelete);
     }
 }

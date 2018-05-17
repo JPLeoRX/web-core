@@ -2,8 +2,13 @@ package com.tekleo.recipes.restapi.example;
 
 import com.tekleo.recipes.api.example.ExampleAO;
 import com.tekleo.recipes.api.example.ExampleAPI;
-import com.tekleo.recipes.shared.AbstractRestAPI;
-import com.tekleo.recipes.shared.exceptions.APIException;
+import com.tekleo.recipes.converters.example.ExampleConverterAOtoRO;
+import com.tekleo.recipes.converters.example.ExampleConverterFOtoAO;
+import com.tekleo.recipes.converters.example.ExampleConverterROtoAO;
+import com.tekleo.recipes.shared.core.converters.AbstractConverterROtoAO;
+import com.tekleo.recipes.shared.core.exceptions.ApiException;
+import com.tekleo.recipes.shared.core.exceptions.RestApiException;
+import com.tekleo.recipes.shared.core.services.AbstractRestApi;
 import com.tekleo.recipes.shared.rest.ReplyObject;
 import com.tekleo.recipes.shared.id.ExampleId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,71 +28,65 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api/example")
-public class ExampleRestAPI implements AbstractRestAPI {
+public class ExampleRestAPI implements AbstractRestApi<ExampleId, ExampleAO, ExampleRO, ExampleFO> {
     @Autowired
     ExampleAPI api;
+
+    @Override
+    public ExampleAPI getApi() {
+        return api;
+    }
+
+    @Override
+    public ExampleConverterAOtoRO getAOtoROConverter() {
+        return new ExampleConverterAOtoRO();
+    }
+
+    @Override
+    public ExampleConverterFOtoAO getFOtoAOConverter() {
+        return new ExampleConverterFOtoAO();
+    }
+
+    @Override
+    public AbstractConverterROtoAO<ExampleRO, ExampleAO> getROtoAOConverter() {
+        return new ExampleConverterROtoAO();
+    }
 
     @RequestMapping(value = "/get/{id}", method = RequestMethod.GET)
     public ReplyObject getExample(@PathVariable(value = "id") String id) {
         try {
-            ExampleRO exampleRO = new  ExampleRO(api.getExample(new ExampleId(id)));
-            return ReplyObject.success("example", exampleRO);
-        } catch (APIException e) {
+            return ReplyObject.success("example", get(new ExampleId(id)));
+        } catch (RestApiException e) {
             e.printStackTrace();
-            return ReplyObject.error("API Exception");
+            return ReplyObject.error("REST API Exception");
         }
     }
 
     @RequestMapping(value = "/getAll", method = RequestMethod.GET)
     public ReplyObject getAllExamples() {
         try {
-            List<ExampleRO> exampleROList = new ExampleConverterAORO().toRO(api.getAllExamples());
-            return ReplyObject.success("examples", exampleROList);
-        } catch (APIException e) {
+            return ReplyObject.success("examples", getAll());
+        } catch (RestApiException e) {
             e.printStackTrace();
-            return ReplyObject.error("API Exception");
+            return ReplyObject.error("REST API Exception");
         }
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ReplyObject addExample(@Valid @RequestBody ExampleFO form) {
         try {
-            ExampleRO exampleRO = new ExampleRO(api.addExample(form.getText()));
-            return ReplyObject.success("example", exampleRO);
-        } catch (APIException e) {
+            return ReplyObject.success("example", add(form));
+        } catch (RestApiException e) {
             e.printStackTrace();
-            return ReplyObject.error("API Exception");
-        }
-    }
-
-    @RequestMapping(value = "/update", method = RequestMethod.PUT)
-    public ReplyObject updateExample(@Valid @RequestBody ExampleRO updatedEntity) {
-        try {
-            ExampleRO exampleRO = new ExampleRO(api.updateExample(new ExampleAO(updatedEntity)));
-            return ReplyObject.success("example", exampleRO);
-        } catch (APIException e) {
-            e.printStackTrace();
-            return ReplyObject.error("API Exception");
+            return ReplyObject.error("REST API Exception");
         }
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
     public ReplyObject deleteExample(@PathVariable(value = "id") String id) {
         try {
-            ExampleRO exampleRO = new ExampleRO(api.deleteExample(new ExampleId(id)));
-            return ReplyObject.success("example", exampleRO);
-        } catch (APIException e) {
-            e.printStackTrace();
-            return ReplyObject.error("API Exception");
-        }
-    }
-
-    @RequestMapping(value = "/deleteAll", method = RequestMethod.DELETE)
-    public ReplyObject deleteAllExamples() {
-        try {
-            List<ExampleRO> exampleROList = new ExampleConverterAORO().toRO(api.deleteAllExamples());
-            return ReplyObject.success("examples", exampleROList);
-        } catch (APIException e) {
+            return ReplyObject.success("example", remove(new ExampleId(id)));
+        } catch (RestApiException e) {
             e.printStackTrace();
             return ReplyObject.error("API Exception");
         }

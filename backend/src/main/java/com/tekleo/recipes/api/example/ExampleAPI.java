@@ -1,10 +1,12 @@
 package com.tekleo.recipes.api.example;
 
-import com.tekleo.recipes.shared.AbstractAPI;
-import com.tekleo.recipes.shared.exceptions.APIException;
+import com.tekleo.recipes.biz.example.ExampleBO;
+import com.tekleo.recipes.converters.example.ExampleConverterAOtoBO;
+import com.tekleo.recipes.converters.example.ExampleConverterBOtoAO;
+import com.tekleo.recipes.shared.core.converters.AbstractConverterAOtoBO;
+import com.tekleo.recipes.shared.core.converters.AbstractConverterBOtoAO;
+import com.tekleo.recipes.shared.core.services.AbstractApi;
 import com.tekleo.recipes.shared.id.ExampleId;
-
-import java.util.List;
 
 /**
  * Sample API interface
@@ -14,18 +16,14 @@ import java.util.List;
  * @author Leo Ertuna
  * @since 24.03.2018 15:37
  */
-public interface ExampleAPI extends AbstractAPI {
-    ExampleAO getExample(ExampleId exampleId) throws APIException;
+public interface ExampleAPI extends AbstractApi<ExampleId, ExampleBO, ExampleAO> {
+    @Override
+    default AbstractConverterBOtoAO<ExampleBO, ExampleAO> getBOtoAOConverter() {
+        return new ExampleConverterBOtoAO();
+    }
 
-    List<ExampleAO> getAllExamples() throws APIException;
-
-    ExampleAO addExample(ExampleAO newEntity) throws APIException;
-
-    ExampleAO addExample(String text) throws APIException;
-
-    ExampleAO updateExample(ExampleAO updatedEntity) throws APIException;
-
-    ExampleAO deleteExample(ExampleId exampleId) throws APIException;
-
-    List<ExampleAO> deleteAllExamples() throws APIException;
+    @Override
+    default AbstractConverterAOtoBO<ExampleAO, ExampleBO> getAOtoBOConverter() {
+        return new ExampleConverterAOtoBO();
+    }
 }

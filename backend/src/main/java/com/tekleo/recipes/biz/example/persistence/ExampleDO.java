@@ -1,10 +1,9 @@
 package com.tekleo.recipes.biz.example.persistence;
 
-import com.tekleo.recipes.biz.example.ExampleBO;
-import com.tekleo.recipes.biz.example.ExampleConverterDOBO;
+import com.tekleo.recipes.shared.core.objects.AbstractDO;
+import com.tekleo.recipes.shared.id.ExampleId;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 /**
  * Sample Database Object
@@ -17,7 +16,7 @@ import java.io.Serializable;
 @Entity
 @Access(AccessType.FIELD)
 @Table(name = "example")
-public class ExampleDO implements Serializable {
+public class ExampleDO implements AbstractDO<ExampleId> {
     // Due to postgreSQL limitations we have to specify lowercase column names of camel case data fields
     @Id @Column(name = "exampleid") private String exampleId;
     @Column private String text;
@@ -29,20 +28,6 @@ public class ExampleDO implements Serializable {
     //------------------------------------------------------------------------------------------------------------------
     public ExampleDO() {
 
-    }
-
-    public ExampleDO(String exampleId, String text, long createdAt) {
-        this.exampleId = exampleId;
-        this.text = text;
-        this.createdAt = createdAt;
-    }
-
-    public ExampleDO(ExampleDO exampleDO) {
-        this(exampleDO.getExampleId(), exampleDO.getText(), exampleDO.getCreatedAt());
-    }
-
-    public ExampleDO(ExampleBO exampleBO) {
-        this(new ExampleConverterDOBO().toDO(exampleBO));
     }
     //------------------------------------------------------------------------------------------------------------------
 

@@ -1,6 +1,7 @@
 package com.tekleo.recipes.restapi.example;
 
-import java.io.Serializable;
+import com.tekleo.recipes.shared.core.objects.AbstractFO;
+import com.tekleo.recipes.shared.id.ExampleId;
 
 /**
  * Sample Form Object
@@ -10,7 +11,7 @@ import java.io.Serializable;
  * @author Leo Ertuna
  * @since 24.03.2018 19:50
  */
-public class ExampleFO implements Serializable {
+public class ExampleFO implements AbstractFO<ExampleId> {
     private String text;
 
     public String getText() {

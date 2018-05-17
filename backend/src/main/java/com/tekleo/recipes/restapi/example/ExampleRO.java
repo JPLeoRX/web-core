@@ -1,8 +1,9 @@
 package com.tekleo.recipes.restapi.example;
 
 import com.tekleo.recipes.api.example.ExampleAO;
-
-import java.io.Serializable;
+import com.tekleo.recipes.converters.example.ExampleConverterAOtoRO;
+import com.tekleo.recipes.shared.core.objects.AbstractRO;
+import com.tekleo.recipes.shared.id.ExampleId;
 
 /**
  * Sample Rest Object
@@ -12,7 +13,7 @@ import java.io.Serializable;
  * @author Leo Ertuna
  * @since 24.03.2018 15:53
  */
-public class ExampleRO implements Serializable {
+public class ExampleRO implements AbstractRO<ExampleId> {
     private String exampleId;
     private String text;
     private long createdAt;
@@ -36,7 +37,7 @@ public class ExampleRO implements Serializable {
     }
 
     public ExampleRO(ExampleAO exampleAO) {
-        this(new ExampleConverterAORO().toRO(exampleAO));
+        this(new ExampleConverterAOtoRO().toRO(exampleAO));
     }
     //------------------------------------------------------------------------------------------------------------------
 

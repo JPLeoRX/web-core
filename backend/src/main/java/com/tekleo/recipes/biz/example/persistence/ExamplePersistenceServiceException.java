@@ -1,6 +1,6 @@
 package com.tekleo.recipes.biz.example.persistence;
 
-import com.tekleo.recipes.shared.exceptions.PersistenceServiceException;
+import com.tekleo.recipes.shared.core.exceptions.PersistenceServiceException;
 
 /**
  * @author Leo Ertuna
