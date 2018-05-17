@@ -1,10 +1,12 @@
-package com.tekleo.recipes.shared.exceptions;
+package com.tekleo.recipes.shared.core.exceptions;
+
+import com.tekleo.recipes.shared.core.services.AbstractService;
 
 /**
- * Service exception
+ * An exception to be used in all {@link AbstractService}
  *
  * @author Leo Ertuna
- * @since 24.03.2018 18:23
+ * @since 17.05.2018 12:19
  */
 public class ServiceException extends Exception {
     public ServiceException() {

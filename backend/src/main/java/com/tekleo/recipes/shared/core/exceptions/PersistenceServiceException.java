@@ -1,10 +1,12 @@
-package com.tekleo.recipes.shared.exceptions;
+package com.tekleo.recipes.shared.core.exceptions;
+
+import com.tekleo.recipes.shared.core.services.AbstractPersistenceService;
 
 /**
- * Persistence service exception
+ * An exception to be used in all {@link AbstractPersistenceService}
  *
  * @author Leo Ertuna
- * @since 24.03.2018 18:23
+ * @since 17.05.2018 12:19
  */
 public class PersistenceServiceException extends Exception {
     public PersistenceServiceException() {

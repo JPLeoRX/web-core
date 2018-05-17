@@ -1,5 +1,7 @@
 package com.tekleo.recipes.shared.id;
 
+import com.tekleo.recipes.shared.core.AbstractId;
+
 import java.io.Serializable;
 import java.util.Objects;
 

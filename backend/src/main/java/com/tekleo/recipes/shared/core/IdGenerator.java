@@ -1,4 +1,4 @@
-package com.tekleo.recipes.shared.id;
+package com.tekleo.recipes.shared.core;
 
 import java.util.UUID;
 
