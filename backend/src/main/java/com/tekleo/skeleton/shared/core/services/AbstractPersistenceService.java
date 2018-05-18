@@ -7,6 +7,9 @@ import com.tekleo.skeleton.shared.core.exceptions.PersistenceServiceException;
 import com.tekleo.skeleton.shared.core.objects.AbstractBO;
 import com.tekleo.skeleton.shared.core.objects.AbstractDO;
 
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
 import java.util.List;
 
 /**
@@ -27,7 +30,20 @@ import java.util.List;
  * @author Leo Ertuna
  * @since 17.05.2018 12:19
  */
+@Transactional
 public interface AbstractPersistenceService<I extends AbstractId, D extends AbstractDO<I>, B extends AbstractBO<I>> {
+    /**
+     * Get entity manager
+     * @return entity manager
+     */
+    EntityManager getEntityManager();
+
+    /**
+     * Get class of DO
+     * @return class
+     */
+    Class<D> getDatabaseObjectClass();
+
     /**
      * Get converter from DO to BO
      * @return converter
@@ -46,14 +62,37 @@ public interface AbstractPersistenceService<I extends AbstractId, D extends Abst
      * @return item
      * @throws PersistenceServiceException
      */
-    B get(I id) throws PersistenceServiceException;
+    default B get(I id) throws PersistenceServiceException {
+        // Check for null arguments
+        if (id == null)
+            throw new PersistenceServiceException("Id is null");
+
+        // Find DO
+        D found = getEntityManager().find(getDatabaseObjectClass(), id.getInternalId());
+
+        // If none found
+        if (found == null)
+            throw new PersistenceServiceException("No object found for id=" + id);
+
+        // Convert to BO
+        return getDOtoBOConverter().toBO(found);
+    }
 
     /**
      * Get all items from the database
      * @return list of all items
      * @throws PersistenceServiceException
      */
-    List<B> getAll() throws PersistenceServiceException;
+    default List<B> getAll() throws PersistenceServiceException {
+        // Create a query
+        TypedQuery<D> query = getEntityManager().createQuery("FROM " + getDatabaseObjectClass().getName(), getDatabaseObjectClass());
+
+        // Execute it, store results as DO
+        List<D> results = query.getResultList();
+
+        // Convert results to BO
+        return getDOtoBOConverter().toBO(results);
+    }
 
     /**
      * Add item to the database
@@ -61,7 +100,20 @@ public interface AbstractPersistenceService<I extends AbstractId, D extends Abst
      * @return added item
      * @throws PersistenceServiceException
      */
-    B add(B newItem) throws PersistenceServiceException;
+    default B add(B newItem) throws PersistenceServiceException {
+        // Check for null arguments
+        if (newItem == null)
+            throw new PersistenceServiceException("New entity is null");
+
+        // Create DO
+        D toAdd = getBOtoDOConverter().toDO(newItem);
+
+        // Write to database
+        getEntityManager().persist(toAdd);
+
+        // Convert to BO
+        return getDOtoBOConverter().toBO(toAdd);
+    }
 
     /**
      * Save updated item in the database
@@ -69,7 +121,27 @@ public interface AbstractPersistenceService<I extends AbstractId, D extends Abst
      * @return updated item
      * @throws PersistenceServiceException
      */
-    B update(B updatedItem) throws PersistenceServiceException;
+    default B update(B updatedItem) throws PersistenceServiceException {
+        // Check for null arguments
+        if (updatedItem == null)
+            throw new PersistenceServiceException("Updated entity is null");
+
+        // Find DO (we must be sure that it exists at this ID
+        D found = getEntityManager().find(getDatabaseObjectClass(), updatedItem.getId().getInternalId());
+
+        // If none found
+        if (found == null)
+            throw new PersistenceServiceException("No object found for id=" + updatedItem.getId());
+
+        // Create DO
+        D toUpdate = getBOtoDOConverter().toDO(updatedItem);
+
+        // Update in the database
+        getEntityManager().merge(toUpdate);
+
+        // Convert to BO
+        return getDOtoBOConverter().toBO(toUpdate);
+    }
 
     /**
      * Remove item from the database
@@ -77,5 +149,22 @@ public interface AbstractPersistenceService<I extends AbstractId, D extends Abst
      * @return removed item
      * @throws PersistenceServiceException
      */
-    B remove(B removedItem) throws PersistenceServiceException;
+    default B remove(B removedItem) throws PersistenceServiceException {
+        // Check for null arguments
+        if (removedItem == null)
+            throw new PersistenceServiceException("Removed entity is null");
+
+        // Find DO
+        D toDelete = getEntityManager().find(getDatabaseObjectClass(), removedItem.getId().getInternalId());
+
+        // If none found
+        if (toDelete == null)
+            throw new PersistenceServiceException("No object found for id=" + removedItem.getId());
+
+        // Delete in the database
+        getEntityManager().remove(toDelete);
+
+        // Convert to BO
+        return getDOtoBOConverter().toBO(toDelete);
+    }
 }
