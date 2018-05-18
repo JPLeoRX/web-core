@@ -95,4 +95,17 @@ public interface AbstractService<I extends AbstractId, B extends AbstractBO<I>> 
             throw new ServiceException(e);
         }
     }
+
+    /**
+     * Remove all items of this entity from the database
+     * @return number of removed items
+     * @throws ServiceException if {@link PersistenceServiceException} occurred
+     */
+    default int removeAll() throws ServiceException {
+        try {
+            return getPersistenceService().removeAll();
+        } catch (PersistenceServiceException e) {
+            throw new ServiceException(e);
+        }
+    }
 }

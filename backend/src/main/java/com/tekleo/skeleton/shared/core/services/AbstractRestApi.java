@@ -119,4 +119,17 @@ public interface AbstractRestApi<I extends AbstractId, A extends AbstractAO<I>, 
             throw new RestApiException(e);
         }
     }
+
+    /**
+     * Remove all items of this entity from the database
+     * @return number of removed items
+     * @throws RestApiException if {@link ApiException} occurred
+     */
+    default int removeAll() throws RestApiException {
+        try {
+            return getApi().removeAll();
+        } catch (ApiException e) {
+            throw new RestApiException(e);
+        }
+    }
 }

@@ -113,6 +113,19 @@ public interface AbstractApi<I extends AbstractId, B extends AbstractBO<I>, A ex
     }
 
     /**
+     * Remove all items of this entity from the database
+     * @return number of removed items
+     * @throws ApiException if {@link ServiceException} occurred
+     */
+    default int removeAll() throws ApiException {
+        try {
+            return getService().removeAll();
+        } catch (ServiceException e) {
+            throw new ApiException(e);
+        }
+    }
+
+    /**
      * Remove item from the database
      * @param id id of the item to remove
      * @return removed item

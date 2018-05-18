@@ -8,6 +8,7 @@ import com.tekleo.skeleton.shared.core.objects.AbstractBO;
 import com.tekleo.skeleton.shared.core.objects.AbstractDO;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import java.util.List;
@@ -166,5 +167,21 @@ public interface AbstractPersistenceService<I extends AbstractId, D extends Abst
 
         // Convert to BO
         return getDOtoBOConverter().toBO(toDelete);
+    }
+
+    /**
+     * Remove all items of this entity from the database
+     * @return number of removed items
+     * @throws PersistenceServiceException
+     */
+    default int removeAll() throws PersistenceServiceException {
+        // Create a query
+        Query query = getEntityManager().createQuery("DELETE FROM " + getDatabaseObjectClass().getName());
+
+        // Execute it, store the number of deleted items
+        int numberOfRemovedItems = query.executeUpdate();
+
+        // Return count
+        return numberOfRemovedItems;
     }
 }
