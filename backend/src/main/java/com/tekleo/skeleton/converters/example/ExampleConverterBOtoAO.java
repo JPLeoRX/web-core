@@ -20,7 +20,7 @@ public class ExampleConverterBOtoAO implements AbstractConverterBOtoAO<ExampleBO
     public ExampleAO toAO(ExampleBO businessObject) {
         ExampleAO apiObject = new ExampleAO();
 
-        apiObject.setExampleId(businessObject.getExampleId());
+        apiObject.setId(businessObject.getId());
         apiObject.setText(businessObject.getText());
         apiObject.setCreatedAt(businessObject.getCreatedAt());
 

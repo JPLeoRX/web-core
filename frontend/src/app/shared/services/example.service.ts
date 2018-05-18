@@ -47,7 +47,7 @@ export class ExampleService {
   updateExample(example: Example): Observable<Example> {
     // Extract data and prepare it for passing as JSON
     let data = {
-      exampleId: example.exampleId,
+      exampleId: example.id,
       text: example.text,
       createdAt: example.createdAt
     };
@@ -64,7 +64,7 @@ export class ExampleService {
 
   deleteExample(example: Example) : Observable<Example> {
     // REST request
-    return this.http.delete<any>('/api/example/delete/' + example.exampleId).pipe(map(response => {
+    return this.http.delete<any>('/api/example/delete/' + example.id).pipe(map(response => {
       // If response is valid
       if (response.success && response.results) {
         // Return result obtained from backend

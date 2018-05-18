@@ -23,7 +23,7 @@ public class ExampleConverterROtoAO implements AbstractConverterROtoAO<ExampleRO
     public ExampleAO toAO(ExampleRO restApiObject) {
         ExampleAO apiObject = new ExampleAO();
 
-        apiObject.setExampleId(new ExampleId(restApiObject.getExampleId()));
+        apiObject.setId(new ExampleId(restApiObject.getId()));
         apiObject.setText(restApiObject.getText());
         apiObject.setCreatedAt(new Timestamp(restApiObject.getCreatedAt()));
 

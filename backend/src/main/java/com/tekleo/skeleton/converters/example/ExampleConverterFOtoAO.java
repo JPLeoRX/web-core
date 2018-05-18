@@ -16,7 +16,7 @@ public class ExampleConverterFOtoAO implements AbstractConverterFOtoAO<ExampleFO
     public ExampleAO toAO(ExampleFO formObject) {
         ExampleAO exampleAO = new ExampleAO();
 
-        exampleAO.setExampleId(new ExampleId());
+        exampleAO.setId(new ExampleId());
         exampleAO.setCreatedAt(Time.Current.getAsTimestamp());
         exampleAO.setText(formObject.getText());
 

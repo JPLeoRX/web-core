@@ -20,7 +20,7 @@ public class ExampleConverterAOtoBO implements AbstractConverterAOtoBO<ExampleAO
     public ExampleBO toBO(ExampleAO exampleAO) {
         ExampleBO exampleBO = new ExampleBO();
 
-        exampleBO.setExampleId(exampleAO.getExampleId());
+        exampleBO.setId(exampleAO.getId());
         exampleBO.setText(exampleAO.getText());
         exampleBO.setCreatedAt(exampleAO.getCreatedAt());
 

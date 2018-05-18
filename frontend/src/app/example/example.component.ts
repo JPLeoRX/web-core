@@ -77,7 +77,7 @@ export class ExampleComponent implements OnInit {
       this._service.deleteExample(example).subscribe((exampleDeleted: Example) => {
         // Remove from the view
         this._examples = this._examples.filter( (e: Example) => {
-          return e.exampleId !== exampleDeleted.exampleId;
+          return e.id !== exampleDeleted.id;
         });
       });
     }
@@ -102,7 +102,7 @@ export class ExampleComponent implements OnInit {
           // Update it in the view
           this._examples = this._examples.filter( (e: Example) => {
             // If this item was updated
-            if (e.exampleId === exampleUpdated.exampleId)
+            if (e.id === exampleUpdated.id)
               // Change its text
               e.text = exampleUpdated.text;
 

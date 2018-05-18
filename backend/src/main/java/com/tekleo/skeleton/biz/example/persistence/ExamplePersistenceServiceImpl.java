@@ -79,11 +79,11 @@ public class ExamplePersistenceServiceImpl implements ExamplePersistenceService 
             throw new ExamplePersistenceServiceException("Updated entity is null");
 
         // Find DO
-        ExampleDO found = entityManager.find(ExampleDO.class, updatedItem.getExampleId().getInternalId());
+        ExampleDO found = entityManager.find(ExampleDO.class, updatedItem.getId().getInternalId());
 
         // If none found
         if (found == null)
-            throw new ExamplePersistenceServiceException("No object found for id=" + updatedItem.getExampleId());
+            throw new ExamplePersistenceServiceException("No object found for id=" + updatedItem.getId());
 
         // Create DO
         ExampleDO toUpdate = getBOtoDOConverter().toDO(updatedItem);
@@ -102,11 +102,11 @@ public class ExamplePersistenceServiceImpl implements ExamplePersistenceService 
             throw new ExamplePersistenceServiceException("Removed entity is null");
 
         // Find DO
-        ExampleDO toDelete = entityManager.find(ExampleDO.class, removedItem.getExampleId().getInternalId());
+        ExampleDO toDelete = entityManager.find(ExampleDO.class, removedItem.getId().getInternalId());
 
         // If none found
         if (toDelete == null)
-            throw new ExamplePersistenceServiceException("No object found for id=" + removedItem.getExampleId());
+            throw new ExamplePersistenceServiceException("No object found for id=" + removedItem.getId());
 
         // Delete in the database
         entityManager.remove(toDelete);

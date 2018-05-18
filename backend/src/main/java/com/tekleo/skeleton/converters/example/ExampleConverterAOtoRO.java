@@ -19,7 +19,7 @@ public class ExampleConverterAOtoRO implements AbstractConverterAOtoRO<ExampleAO
     public ExampleRO toRO(ExampleAO apiObject) {
         ExampleRO exampleRO = new ExampleRO();
 
-        exampleRO.setExampleId(apiObject.getExampleId().getInternalId());
+        exampleRO.setId(apiObject.getId().getInternalId());
         exampleRO.setText(apiObject.getText());
         exampleRO.setCreatedAt(apiObject.getCreatedAt().getTime());
 

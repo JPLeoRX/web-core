@@ -25,26 +25,12 @@ public class ExampleRO implements AbstractRO<ExampleId> {
     public ExampleRO() {
 
     }
-
-    public ExampleRO(String exampleId, String text, long createdAt) {
-        this.exampleId = exampleId;
-        this.text = text;
-        this.createdAt = createdAt;
-    }
-
-    public ExampleRO(ExampleRO exampleDO) {
-        this(exampleDO.getExampleId(), exampleDO.getText(), exampleDO.getCreatedAt());
-    }
-
-    public ExampleRO(ExampleAO exampleAO) {
-        this(new ExampleConverterAOtoRO().toRO(exampleAO));
-    }
     //------------------------------------------------------------------------------------------------------------------
 
 
     // Getters
     //------------------------------------------------------------------------------------------------------------------
-    public String getExampleId() {
+    public String getId() {
         return exampleId;
     }
 
@@ -61,7 +47,7 @@ public class ExampleRO implements AbstractRO<ExampleId> {
 
     // Setters
     //------------------------------------------------------------------------------------------------------------------
-    public void setExampleId(String exampleId) {
+    public void setId(String exampleId) {
         this.exampleId = exampleId;
     }
 

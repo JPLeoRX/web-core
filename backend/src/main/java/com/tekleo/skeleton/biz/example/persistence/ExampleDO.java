@@ -35,7 +35,7 @@ public class ExampleDO implements AbstractDO<ExampleId> {
 
     // Getters
     //------------------------------------------------------------------------------------------------------------------
-    public String getExampleId() {
+    public String getId() {
         return exampleId;
     }
 
@@ -52,7 +52,7 @@ public class ExampleDO implements AbstractDO<ExampleId> {
 
     // Setters
     //------------------------------------------------------------------------------------------------------------------
-    public void setExampleId(String exampleId) {
+    public void setId(String exampleId) {
         this.exampleId = exampleId;
     }
 

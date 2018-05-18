@@ -31,7 +31,7 @@ public class ExampleBO implements AbstractBO<ExampleId> {
 
     // Getters
     //------------------------------------------------------------------------------------------------------------------
-    public ExampleId getExampleId() {
+    public ExampleId getId() {
         return exampleId;
     }
 
@@ -48,7 +48,7 @@ public class ExampleBO implements AbstractBO<ExampleId> {
 
     // Setters
     //------------------------------------------------------------------------------------------------------------------
-    public void setExampleId(ExampleId exampleId) {
+    public void setId(ExampleId exampleId) {
         this.exampleId = exampleId;
     }
 

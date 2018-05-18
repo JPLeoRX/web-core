@@ -22,7 +22,7 @@ public class ExampleConverterDOtoBO implements AbstractConverterDOtoBO<ExampleDO
     public ExampleBO toBO(ExampleDO exampleDO) {
         ExampleBO exampleBO = new ExampleBO();
 
-        exampleBO.setExampleId(new ExampleId(exampleDO.getExampleId()));
+        exampleBO.setId(new ExampleId(exampleDO.getId()));
         exampleBO.setText(exampleDO.getText());
         exampleBO.setCreatedAt(new Timestamp(exampleDO.getCreatedAt()));
 

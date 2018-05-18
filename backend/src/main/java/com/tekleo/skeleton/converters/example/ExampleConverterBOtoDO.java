@@ -20,7 +20,7 @@ public class ExampleConverterBOtoDO implements AbstractConverterBOtoDO<ExampleBO
     public ExampleDO toDO(ExampleBO exampleBO) {
         ExampleDO exampleDO = new ExampleDO();
 
-        exampleDO.setExampleId(exampleBO.getExampleId().getInternalId());
+        exampleDO.setId(exampleBO.getId().getInternalId());
         exampleDO.setText(exampleBO.getText());
         exampleDO.setCreatedAt(exampleBO.getCreatedAt().getTime());
 

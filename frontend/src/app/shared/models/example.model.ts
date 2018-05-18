@@ -7,7 +7,7 @@
  * @since 24.03.2018 19:57
  */
 export class Example {
-  private _exampleId: string;
+  private _id: string;
   private _text: string;
   private _createdAt: number;
 
@@ -15,8 +15,8 @@ export class Example {
 
   }
 
-  get exampleId(): string {
-    return this._exampleId;
+  get id(): string {
+    return this._id;
   }
 
   get text(): string {
