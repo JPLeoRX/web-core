@@ -89,4 +89,14 @@ public class ExampleRestAPI implements AbstractRestApi<ExampleId, ExampleAO, Exa
             return ReplyObject.error("API Exception");
         }
     }
+
+    @RequestMapping(value = "/deleteAll", method = RequestMethod.DELETE)
+    public ReplyObject deleteAllExamples() {
+        try {
+            return ReplyObject.success("example", removeAll());
+        } catch (RestApiException e) {
+            e.printStackTrace();
+            return ReplyObject.error("API Exception");
+        }
+    }
 }
