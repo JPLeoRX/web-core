@@ -4,6 +4,7 @@ import com.tekleo.skeleton.biz.example.ExampleBO;
 import com.tekleo.skeleton.biz.example.persistence.ExampleDO;
 import com.tekleo.skeleton.shared.core.converters.AbstractConverterDOtoBO;
 import com.tekleo.skeleton.shared.id.ExampleId;
+import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 
@@ -13,6 +14,7 @@ import java.sql.Timestamp;
  * @author Leo Ertuna
  * @since 24.03.2018 14:20
  */
+@Service
 public class ExampleConverterDOtoBO implements AbstractConverterDOtoBO<ExampleDO, ExampleBO> {
     /**
      * Convert from DO to BO

@@ -3,6 +3,7 @@ package com.tekleo.skeleton.converters.example;
 import com.tekleo.skeleton.api.example.ExampleAO;
 import com.tekleo.skeleton.biz.example.ExampleBO;
 import com.tekleo.skeleton.shared.core.converters.AbstractConverterBOtoAO;
+import org.springframework.stereotype.Service;
 
 /**
  * Simple converter to switch from BO to AO objects
@@ -10,6 +11,7 @@ import com.tekleo.skeleton.shared.core.converters.AbstractConverterBOtoAO;
  * @author Leo Ertuna
  * @since 24.03.2018 15:32
  */
+@Service
 public class ExampleConverterBOtoAO implements AbstractConverterBOtoAO<ExampleBO, ExampleAO> {
     /**
      * Convert from BO to AO

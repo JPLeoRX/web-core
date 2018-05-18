@@ -5,7 +5,9 @@ import com.tekleo.skeleton.restapi.example.ExampleFO;
 import com.tekleo.skeleton.shared.core.converters.AbstractConverterFOtoAO;
 import com.tekleo.skeleton.shared.date_and_time.Time;
 import com.tekleo.skeleton.shared.id.ExampleId;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ExampleConverterFOtoAO implements AbstractConverterFOtoAO<ExampleFO, ExampleAO> {
     /**
      * Convert from FO to AO

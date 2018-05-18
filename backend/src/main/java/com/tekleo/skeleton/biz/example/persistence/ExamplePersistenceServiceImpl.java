@@ -1,5 +1,11 @@
 package com.tekleo.skeleton.biz.example.persistence;
 
+import com.tekleo.skeleton.biz.example.ExampleBO;
+import com.tekleo.skeleton.converters.example.ExampleConverterBOtoDO;
+import com.tekleo.skeleton.converters.example.ExampleConverterDOtoBO;
+import com.tekleo.skeleton.shared.core.converters.AbstractConverterBOtoDO;
+import com.tekleo.skeleton.shared.core.converters.AbstractConverterDOtoBO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
@@ -22,6 +28,12 @@ public class ExamplePersistenceServiceImpl implements ExamplePersistenceService 
     @PersistenceContext
     private EntityManager entityManager;
 
+    @Autowired
+    private ExampleConverterDOtoBO exampleConverterDOtoBO;
+
+    @Autowired
+    private ExampleConverterBOtoDO exampleConverterBOtoDO;
+
     @Override
     public EntityManager getEntityManager() {
         return entityManager;
@@ -30,5 +42,15 @@ public class ExamplePersistenceServiceImpl implements ExamplePersistenceService 
     @Override
     public Class<ExampleDO> getDatabaseObjectClass() {
         return ExampleDO.class;
+    }
+
+    @Override
+    public AbstractConverterDOtoBO<ExampleDO, ExampleBO> getDOtoBOConverter() {
+        return exampleConverterDOtoBO;
+    }
+
+    @Override
+    public AbstractConverterBOtoDO<ExampleBO, ExampleDO> getBOtoDOConverter() {
+        return exampleConverterBOtoDO;
     }
 }

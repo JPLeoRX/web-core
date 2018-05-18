@@ -1,6 +1,11 @@
 package com.tekleo.skeleton.api.example;
 
+import com.tekleo.skeleton.biz.example.ExampleBO;
 import com.tekleo.skeleton.biz.example.ExampleService;
+import com.tekleo.skeleton.converters.example.ExampleConverterAOtoBO;
+import com.tekleo.skeleton.converters.example.ExampleConverterBOtoAO;
+import com.tekleo.skeleton.shared.core.converters.AbstractConverterAOtoBO;
+import com.tekleo.skeleton.shared.core.converters.AbstractConverterBOtoAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,8 +26,24 @@ public class ExampleAPIImpl implements ExampleAPI {
     @Autowired
     private ExampleService service;
 
+    @Autowired
+    private ExampleConverterBOtoAO exampleConverterBOtoAO;
+
+    @Autowired
+    private ExampleConverterAOtoBO exampleConverterAOtoBO;
+
     @Override
     public ExampleService getService() {
         return service;
+    }
+
+    @Override
+    public AbstractConverterBOtoAO<ExampleBO, ExampleAO> getBOtoAOConverter() {
+        return exampleConverterBOtoAO;
+    }
+
+    @Override
+    public AbstractConverterAOtoBO<ExampleAO, ExampleBO> getAOtoBOConverter() {
+        return exampleConverterAOtoBO;
     }
 }

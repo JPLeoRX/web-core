@@ -3,6 +3,7 @@ package com.tekleo.skeleton.converters.example;
 import com.tekleo.skeleton.biz.example.ExampleBO;
 import com.tekleo.skeleton.biz.example.persistence.ExampleDO;
 import com.tekleo.skeleton.shared.core.converters.AbstractConverterBOtoDO;
+import org.springframework.stereotype.Service;
 
 /**
  * Simple converter to switch from BO to DO objects
@@ -10,6 +11,7 @@ import com.tekleo.skeleton.shared.core.converters.AbstractConverterBOtoDO;
  * @author Leo Ertuna
  * @since 24.03.2018 14:20
  */
+@Service
 public class ExampleConverterBOtoDO implements AbstractConverterBOtoDO<ExampleBO, ExampleDO> {
     /**
      * Convert from BO to DO

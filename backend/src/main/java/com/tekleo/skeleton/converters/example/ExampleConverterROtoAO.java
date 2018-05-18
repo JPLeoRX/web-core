@@ -4,6 +4,7 @@ import com.tekleo.skeleton.api.example.ExampleAO;
 import com.tekleo.skeleton.restapi.example.ExampleRO;
 import com.tekleo.skeleton.shared.core.converters.AbstractConverterROtoAO;
 import com.tekleo.skeleton.shared.id.ExampleId;
+import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 
@@ -13,6 +14,7 @@ import java.sql.Timestamp;
  * @author Leo Ertuna
  * @since 24.03.2018 15:32
  */
+@Service
 public class ExampleConverterROtoAO implements AbstractConverterROtoAO<ExampleRO, ExampleAO> {
     /**
      * Convert from RO to AO
