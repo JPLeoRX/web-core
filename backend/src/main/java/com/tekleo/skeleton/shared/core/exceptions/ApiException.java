@@ -5,6 +5,8 @@ import com.tekleo.skeleton.shared.core.services.AbstractApi;
 /**
  * An exception to be used in all {@link AbstractApi}
  *
+ * All your exceptions that are used in APIs must extend this exception
+ *
  * @author Leo Ertuna
  * @since 17.05.2018 12:19
  */

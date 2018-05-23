@@ -5,6 +5,8 @@ import com.tekleo.skeleton.shared.core.services.AbstractService;
 /**
  * An exception to be used in all {@link AbstractService}
  *
+ * All your exceptions that are used in services must extend this exception
+ *
  * @author Leo Ertuna
  * @since 17.05.2018 12:19
  */
