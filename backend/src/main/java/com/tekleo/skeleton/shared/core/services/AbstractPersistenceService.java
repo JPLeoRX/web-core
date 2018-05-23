@@ -3,6 +3,7 @@ package com.tekleo.skeleton.shared.core.services;
 import com.tekleo.skeleton.shared.core.AbstractId;
 import com.tekleo.skeleton.shared.core.converters.AbstractConverterBOtoDO;
 import com.tekleo.skeleton.shared.core.converters.AbstractConverterDOtoBO;
+import com.tekleo.skeleton.shared.core.exceptions.ExceptionManager;
 import com.tekleo.skeleton.shared.core.exceptions.PersistenceServiceException;
 import com.tekleo.skeleton.shared.core.objects.AbstractBO;
 import com.tekleo.skeleton.shared.core.objects.AbstractDO;
@@ -27,12 +28,13 @@ import java.util.List;
  * @param <I> id of this entity
  * @param <D> database object
  * @param <B> business object
+ * @param <E> exception manager
  *
  * @author Leo Ertuna
  * @since 17.05.2018 12:19
  */
 @Transactional
-public interface AbstractPersistenceService<I extends AbstractId, D extends AbstractDO<I>, B extends AbstractBO<I>> {
+public interface AbstractPersistenceService<I extends AbstractId, D extends AbstractDO<I>, B extends AbstractBO<I>, E extends ExceptionManager<? extends PersistenceServiceException>> {
     /**
      * Get entity manager
      * @return entity manager
@@ -58,6 +60,12 @@ public interface AbstractPersistenceService<I extends AbstractId, D extends Abst
     AbstractConverterBOtoDO<B, D> getBOtoDOConverter();
 
     /**
+     * Get exception manager
+     * @return exception manager
+     */
+    E getExceptionManager();
+
+    /**
      * Get an item from the database by its ID
      * @param id id
      * @return item
@@ -66,14 +74,14 @@ public interface AbstractPersistenceService<I extends AbstractId, D extends Abst
     default B get(I id) throws PersistenceServiceException {
         // Check for null arguments
         if (id == null)
-            throw new PersistenceServiceException("Id is null");
+            throw getExceptionManager().create("Id is null");
 
         // Find DO
         D found = getEntityManager().find(getDatabaseObjectClass(), id.getInternalId());
 
         // If none found
         if (found == null)
-            throw new PersistenceServiceException("No object found for id=" + id);
+            throw getExceptionManager().create("No object found for id=" + id);
 
         // Convert to BO
         return getDOtoBOConverter().toBO(found);
@@ -104,7 +112,7 @@ public interface AbstractPersistenceService<I extends AbstractId, D extends Abst
     default B add(B newItem) throws PersistenceServiceException {
         // Check for null arguments
         if (newItem == null)
-            throw new PersistenceServiceException("New entity is null");
+            throw getExceptionManager().create("New entity is null");
 
         // Create DO
         D toAdd = getBOtoDOConverter().toDO(newItem);
@@ -125,14 +133,14 @@ public interface AbstractPersistenceService<I extends AbstractId, D extends Abst
     default B update(B updatedItem) throws PersistenceServiceException {
         // Check for null arguments
         if (updatedItem == null)
-            throw new PersistenceServiceException("Updated entity is null");
+            throw getExceptionManager().create("Updated entity is null");
 
         // Find DO (we must be sure that it exists at this ID
         D found = getEntityManager().find(getDatabaseObjectClass(), updatedItem.getId().getInternalId());
 
         // If none found
         if (found == null)
-            throw new PersistenceServiceException("No object found for id=" + updatedItem.getId());
+            throw getExceptionManager().create("No object found for id=" + updatedItem.getId());
 
         // Create DO
         D toUpdate = getBOtoDOConverter().toDO(updatedItem);
@@ -153,14 +161,14 @@ public interface AbstractPersistenceService<I extends AbstractId, D extends Abst
     default B remove(B removedItem) throws PersistenceServiceException {
         // Check for null arguments
         if (removedItem == null)
-            throw new PersistenceServiceException("Removed entity is null");
+            throw getExceptionManager().create("Removed entity is null");
 
         // Find DO
         D toDelete = getEntityManager().find(getDatabaseObjectClass(), removedItem.getId().getInternalId());
 
         // If none found
         if (toDelete == null)
-            throw new PersistenceServiceException("No object found for id=" + removedItem.getId());
+            throw getExceptionManager().create("No object found for id=" + removedItem.getId());
 
         // Delete in the database
         getEntityManager().remove(toDelete);

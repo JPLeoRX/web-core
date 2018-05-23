@@ -4,6 +4,7 @@ import com.tekleo.skeleton.shared.core.AbstractId;
 import com.tekleo.skeleton.shared.core.converters.AbstractConverterAOtoBO;
 import com.tekleo.skeleton.shared.core.converters.AbstractConverterBOtoAO;
 import com.tekleo.skeleton.shared.core.exceptions.ApiException;
+import com.tekleo.skeleton.shared.core.exceptions.ExceptionManager;
 import com.tekleo.skeleton.shared.core.exceptions.ServiceException;
 import com.tekleo.skeleton.shared.core.objects.AbstractAO;
 import com.tekleo.skeleton.shared.core.objects.AbstractBO;
@@ -20,16 +21,17 @@ import java.util.List;
  * @param <I> id of this entity
  * @param <B> business object
  * @param <A> api object
+ * @param <E> exception manager
  *
  * @author Leo Ertuna
  * @since 17.05.2018 13:05
  */
-public interface AbstractApi<I extends AbstractId, B extends AbstractBO<I>, A extends AbstractAO<I>> {
+public interface AbstractApi<I extends AbstractId, B extends AbstractBO<I>, A extends AbstractAO<I>, E extends ExceptionManager<? extends ApiException>> {
     /**
      * Get a pointer to the service
      * @return service
      */
-    AbstractService<I, B> getService();
+    AbstractService<I, B, ?> getService();
 
     /**
      * Get converter from BO to AO
@@ -44,6 +46,12 @@ public interface AbstractApi<I extends AbstractId, B extends AbstractBO<I>, A ex
     AbstractConverterAOtoBO<A, B> getAOtoBOConverter();
 
     /**
+     * Get exception manager
+     * @return exception manager
+     */
+    E getExceptionManager();
+
+    /**
      * Get an item from the database by its ID
      * @param id id
      * @return item
@@ -53,7 +61,7 @@ public interface AbstractApi<I extends AbstractId, B extends AbstractBO<I>, A ex
         try {
             return getBOtoAOConverter().toAO(getService().get(id));
         } catch (ServiceException e) {
-            throw new ApiException(e);
+            throw getExceptionManager().create(e);
         }
     }
 
@@ -66,7 +74,7 @@ public interface AbstractApi<I extends AbstractId, B extends AbstractBO<I>, A ex
         try {
             return getBOtoAOConverter().toAO(getService().getAll());
         } catch (ServiceException e) {
-            throw new ApiException(e);
+            throw getExceptionManager().create(e);
         }
     }
 
@@ -80,7 +88,7 @@ public interface AbstractApi<I extends AbstractId, B extends AbstractBO<I>, A ex
         try {
             return getBOtoAOConverter().toAO(getService().add(getAOtoBOConverter().toBO(newItem)));
         } catch (ServiceException e) {
-            throw new ApiException(e);
+            throw getExceptionManager().create(e);
         }
     }
 
@@ -94,7 +102,7 @@ public interface AbstractApi<I extends AbstractId, B extends AbstractBO<I>, A ex
         try {
             return getBOtoAOConverter().toAO(getService().update(getAOtoBOConverter().toBO(updatedItem)));
         } catch (ServiceException e) {
-            throw new ApiException(e);
+            throw getExceptionManager().create(e);
         }
     }
 
@@ -108,7 +116,7 @@ public interface AbstractApi<I extends AbstractId, B extends AbstractBO<I>, A ex
         try {
             return getBOtoAOConverter().toAO(getService().remove(getAOtoBOConverter().toBO(removedItem)));
         } catch (ServiceException e) {
-            throw new ApiException(e);
+            throw getExceptionManager().create(e);
         }
     }
 
@@ -121,17 +129,7 @@ public interface AbstractApi<I extends AbstractId, B extends AbstractBO<I>, A ex
         try {
             return getService().removeAll();
         } catch (ServiceException e) {
-            throw new ApiException(e);
+            throw getExceptionManager().create(e);
         }
-    }
-
-    /**
-     * Remove item from the database
-     * @param id id of the item to remove
-     * @return removed item
-     * @throws ApiException if {@link ServiceException} occurred or any of nested {@link ApiException} occurred
-     */
-    default A remove(I id) throws ApiException {
-        return remove(get(id));
     }
 }

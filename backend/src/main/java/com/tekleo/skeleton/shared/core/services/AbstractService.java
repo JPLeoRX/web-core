@@ -1,6 +1,7 @@
 package com.tekleo.skeleton.shared.core.services;
 
 import com.tekleo.skeleton.shared.core.AbstractId;
+import com.tekleo.skeleton.shared.core.exceptions.ExceptionManager;
 import com.tekleo.skeleton.shared.core.exceptions.PersistenceServiceException;
 import com.tekleo.skeleton.shared.core.exceptions.ServiceException;
 import com.tekleo.skeleton.shared.core.objects.AbstractBO;
@@ -16,16 +17,23 @@ import java.util.List;
  *
  * @param <I> id of this entity
  * @param <B> business object
+ * @param <E> exception manager
  *
  * @author Leo Ertuna
  * @since 17.05.2018 12:31
  */
-public interface AbstractService<I extends AbstractId, B extends AbstractBO<I>> {
+public interface AbstractService<I extends AbstractId, B extends AbstractBO<I>, E extends ExceptionManager<? extends ServiceException>> {
     /**
      * Get a pointer to the persistence service
      * @return persistence service
      */
-    AbstractPersistenceService<I, ?, B> getPersistenceService();
+    AbstractPersistenceService<I, ?, B, ?> getPersistenceService();
+
+    /**
+     * Get exception manager
+     * @return exception manager
+     */
+    E getExceptionManager();
 
     /**
      * Get an item from the database by its ID
@@ -37,7 +45,7 @@ public interface AbstractService<I extends AbstractId, B extends AbstractBO<I>> 
         try {
             return getPersistenceService().get(id);
         } catch (PersistenceServiceException e) {
-            throw new ServiceException(e);
+            throw getExceptionManager().create(e);
         }
     }
 
@@ -50,7 +58,7 @@ public interface AbstractService<I extends AbstractId, B extends AbstractBO<I>> 
         try {
             return getPersistenceService().getAll();
         } catch (PersistenceServiceException e) {
-            throw new ServiceException(e);
+            throw getExceptionManager().create(e);
         }
     }
 
@@ -64,7 +72,7 @@ public interface AbstractService<I extends AbstractId, B extends AbstractBO<I>> 
         try {
             return getPersistenceService().add(newItem);
         } catch (PersistenceServiceException e) {
-            throw new ServiceException(e);
+            throw getExceptionManager().create(e);
         }
     }
 
@@ -78,7 +86,7 @@ public interface AbstractService<I extends AbstractId, B extends AbstractBO<I>> 
         try {
             return getPersistenceService().update(updatedItem);
         } catch (PersistenceServiceException e) {
-            throw new ServiceException(e);
+            throw getExceptionManager().create(e);
         }
     }
 
@@ -92,7 +100,7 @@ public interface AbstractService<I extends AbstractId, B extends AbstractBO<I>> 
         try {
             return getPersistenceService().remove(removedItem);
         } catch (PersistenceServiceException e) {
-            throw new ServiceException(e);
+            throw getExceptionManager().create(e);
         }
     }
 
@@ -105,7 +113,7 @@ public interface AbstractService<I extends AbstractId, B extends AbstractBO<I>> 
         try {
             return getPersistenceService().removeAll();
         } catch (PersistenceServiceException e) {
-            throw new ServiceException(e);
+            throw getExceptionManager().create(e);
         }
     }
 }

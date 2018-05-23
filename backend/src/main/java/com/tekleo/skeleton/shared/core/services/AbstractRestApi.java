@@ -5,6 +5,7 @@ import com.tekleo.skeleton.shared.core.converters.AbstractConverterAOtoRO;
 import com.tekleo.skeleton.shared.core.converters.AbstractConverterFOtoAO;
 import com.tekleo.skeleton.shared.core.converters.AbstractConverterROtoAO;
 import com.tekleo.skeleton.shared.core.exceptions.ApiException;
+import com.tekleo.skeleton.shared.core.exceptions.ExceptionManager;
 import com.tekleo.skeleton.shared.core.exceptions.RestApiException;
 import com.tekleo.skeleton.shared.core.objects.AbstractAO;
 import com.tekleo.skeleton.shared.core.objects.AbstractFO;
@@ -21,17 +22,18 @@ import java.util.List;
  * @param <A> api object
  * @param <R> rest api object
  * @param <F> form object
+ * @param <E> exception manager
  *
  * @author Leo Ertuna
  * @since 17.05.2018 15:00
  */
-public interface AbstractRestApi<I extends AbstractId, A extends AbstractAO<I>, R extends AbstractRO<I>, F extends AbstractFO<I>> {
+public interface AbstractRestApi<I extends AbstractId, A extends AbstractAO<I>, R extends AbstractRO<I>, F extends AbstractFO<I>, E extends ExceptionManager<? extends RestApiException>> {
     /**
      * Get a pointer to the api
      * When implementing change the return type to your API
      * @return api
      */
-    AbstractApi<I, ?, A> getApi();
+    AbstractApi<I, ?, A, ?> getApi();
 
     /**
      * Get converter from AO to RO
@@ -52,6 +54,12 @@ public interface AbstractRestApi<I extends AbstractId, A extends AbstractAO<I>, 
     AbstractConverterFOtoAO<F, A> getFOtoAOConverter();
 
     /**
+     * Get exception manager
+     * @return exception manager
+     */
+    E getExceptionManager();
+
+    /**
      * Get an item from the database by its ID
      * @param id id
      * @return item
@@ -61,7 +69,7 @@ public interface AbstractRestApi<I extends AbstractId, A extends AbstractAO<I>, 
         try {
             return getAOtoROConverter().toRO(getApi().get(id));
         } catch (ApiException e) {
-            throw new RestApiException(e);
+            throw getExceptionManager().create(e);
         }
     }
 
@@ -74,7 +82,7 @@ public interface AbstractRestApi<I extends AbstractId, A extends AbstractAO<I>, 
         try {
             return getAOtoROConverter().toRO(getApi().getAll());
         } catch (ApiException e) {
-            throw new RestApiException(e);
+            throw getExceptionManager().create(e);
         }
     }
 
@@ -88,7 +96,7 @@ public interface AbstractRestApi<I extends AbstractId, A extends AbstractAO<I>, 
         try {
             return getAOtoROConverter().toRO(getApi().add(getFOtoAOConverter().toAO(newItem)));
         } catch (ApiException e) {
-            throw new RestApiException(e);
+            throw getExceptionManager().create(e);
         }
     }
 
@@ -102,7 +110,7 @@ public interface AbstractRestApi<I extends AbstractId, A extends AbstractAO<I>, 
         try {
             return getAOtoROConverter().toRO(getApi().update(getROtoAOConverter().toAO(updatedItem)));
         } catch (ApiException e) {
-            throw new RestApiException(e);
+            throw getExceptionManager().create(e);
         }
     }
 
@@ -114,9 +122,9 @@ public interface AbstractRestApi<I extends AbstractId, A extends AbstractAO<I>, 
      */
     default R remove(I id) throws RestApiException {
         try {
-            return getAOtoROConverter().toRO(getApi().remove(id));
+            return getAOtoROConverter().toRO(getApi().remove(getApi().get(id)));
         } catch (ApiException e) {
-            throw new RestApiException(e);
+            throw getExceptionManager().create(e);
         }
     }
 
@@ -129,7 +137,7 @@ public interface AbstractRestApi<I extends AbstractId, A extends AbstractAO<I>, 
         try {
             return getApi().removeAll();
         } catch (ApiException e) {
-            throw new RestApiException(e);
+            throw getExceptionManager().create(e);
         }
     }
 }
