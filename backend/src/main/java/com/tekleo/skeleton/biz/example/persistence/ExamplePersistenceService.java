@@ -12,6 +12,6 @@ import com.tekleo.skeleton.shared.id.ExampleId;
  * @author Leo Ertuna
  * @since 24.03.2018 14:28
  */
-public interface ExamplePersistenceService extends AbstractPersistenceService<ExampleId, ExampleDO, ExampleBO> {
+public interface ExamplePersistenceService extends AbstractPersistenceService<ExampleId, ExampleDO, ExampleBO, ExamplePersistenceServiceExceptionManager> {
 
 }

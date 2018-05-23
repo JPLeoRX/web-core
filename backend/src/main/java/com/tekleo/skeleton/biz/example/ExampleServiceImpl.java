@@ -20,8 +20,16 @@ public class ExampleServiceImpl implements ExampleService {
     @Autowired
     private ExamplePersistenceService persistenceService;
 
+    @Autowired
+    private ExampleServiceExceptionManager exceptionManager;
+
     @Override
     public ExamplePersistenceService getPersistenceService() {
         return persistenceService;
+    }
+
+    @Override
+    public ExampleServiceExceptionManager getExceptionManager() {
+        return exceptionManager;
     }
 }

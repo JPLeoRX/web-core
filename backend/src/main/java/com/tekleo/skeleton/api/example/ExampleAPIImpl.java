@@ -32,6 +32,9 @@ public class ExampleAPIImpl implements ExampleAPI {
     @Autowired
     private ExampleConverterAOtoBO exampleConverterAOtoBO;
 
+    @Autowired
+    private ExampleApiExceptionManager exceptionManager;
+
     @Override
     public ExampleService getService() {
         return service;
@@ -45,5 +48,10 @@ public class ExampleAPIImpl implements ExampleAPI {
     @Override
     public AbstractConverterAOtoBO<ExampleAO, ExampleBO> getAOtoBOConverter() {
         return exampleConverterAOtoBO;
+    }
+
+    @Override
+    public ExampleApiExceptionManager getExceptionManager() {
+        return exceptionManager;
     }
 }

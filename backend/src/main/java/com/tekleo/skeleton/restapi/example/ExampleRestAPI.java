@@ -26,9 +26,12 @@ import javax.validation.Valid;
  */
 @RestController
 @RequestMapping("/api/example")
-public class ExampleRestAPI implements AbstractRestApi<ExampleId, ExampleAO, ExampleRO, ExampleFO> {
+public class ExampleRestAPI implements AbstractRestApi<ExampleId, ExampleAO, ExampleRO, ExampleFO, ExampleRestApiExceptionManager> {
     @Autowired
-    ExampleAPI api;
+    private ExampleAPI api;
+
+    @Autowired
+    private ExampleRestApiExceptionManager exceptionManager;
 
     @Override
     public ExampleAPI getApi() {
@@ -48,6 +51,11 @@ public class ExampleRestAPI implements AbstractRestApi<ExampleId, ExampleAO, Exa
     @Override
     public AbstractConverterROtoAO<ExampleRO, ExampleAO> getROtoAOConverter() {
         return new ExampleConverterROtoAO();
+    }
+
+    @Override
+    public ExampleRestApiExceptionManager getExceptionManager() {
+        return exceptionManager;
     }
 
     @RequestMapping(value = "/get/{id}", method = RequestMethod.GET)

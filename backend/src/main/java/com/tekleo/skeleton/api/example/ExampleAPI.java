@@ -12,6 +12,6 @@ import com.tekleo.skeleton.shared.id.ExampleId;
  * @author Leo Ertuna
  * @since 24.03.2018 15:37
  */
-public interface ExampleAPI extends AbstractApi<ExampleId, ExampleBO, ExampleAO> {
+public interface ExampleAPI extends AbstractApi<ExampleId, ExampleBO, ExampleAO, ExampleApiExceptionManager> {
 
 }

@@ -34,6 +34,9 @@ public class ExamplePersistenceServiceImpl implements ExamplePersistenceService 
     @Autowired
     private ExampleConverterBOtoDO exampleConverterBOtoDO;
 
+    @Autowired
+    private ExamplePersistenceServiceExceptionManager exceptionManager;
+
     @Override
     public EntityManager getEntityManager() {
         return entityManager;
@@ -52,5 +55,10 @@ public class ExamplePersistenceServiceImpl implements ExamplePersistenceService 
     @Override
     public AbstractConverterBOtoDO<ExampleBO, ExampleDO> getBOtoDOConverter() {
         return exampleConverterBOtoDO;
+    }
+
+    @Override
+    public ExamplePersistenceServiceExceptionManager getExceptionManager() {
+        return exceptionManager;
     }
 }

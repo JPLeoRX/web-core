@@ -11,6 +11,6 @@ import com.tekleo.skeleton.shared.id.ExampleId;
  * @author Leo Ertuna
  * @since 24.03.2018 15:01
  */
-public interface ExampleService extends AbstractService<ExampleId, ExampleBO> {
+public interface ExampleService extends AbstractService<ExampleId, ExampleBO, ExampleServiceExceptionManager> {
 
 }
