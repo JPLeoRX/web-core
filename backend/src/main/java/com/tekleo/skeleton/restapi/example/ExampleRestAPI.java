@@ -11,6 +11,7 @@ import com.tekleo.skeleton.shared.core.services.AbstractRestApi;
 import com.tekleo.skeleton.shared.rest.ReplyObject;
 import com.tekleo.skeleton.shared.id.ExampleId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -58,8 +59,8 @@ public class ExampleRestAPI implements AbstractRestApi<ExampleId, ExampleAO, Exa
         return exceptionManager;
     }
 
-    @RequestMapping(value = "/get/{id}", method = RequestMethod.GET)
-    public ReplyObject getExample(@PathVariable(value = "id") String id) {
+    @RequestMapping(value = "/get/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody ReplyObject getExample(@PathVariable(value = "id") String id) {
         try {
             return ReplyObject.success("example", get(new ExampleId(id)));
         } catch (RestApiException e) {
@@ -68,8 +69,8 @@ public class ExampleRestAPI implements AbstractRestApi<ExampleId, ExampleAO, Exa
         }
     }
 
-    @RequestMapping(value = "/getAll", method = RequestMethod.GET)
-    public ReplyObject getAllExamples() {
+    @RequestMapping(value = "/getAll", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody ReplyObject getAllExamples() {
         try {
             return ReplyObject.success("examples", getAll());
         } catch (RestApiException e) {
@@ -78,8 +79,8 @@ public class ExampleRestAPI implements AbstractRestApi<ExampleId, ExampleAO, Exa
         }
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public ReplyObject addExample(@Valid @RequestBody ExampleFO form) {
+    @RequestMapping(value = "/add", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody ReplyObject addExample(@Valid @RequestBody ExampleFO form) {
         try {
             return ReplyObject.success("example", add(form));
         } catch (RestApiException e) {
@@ -88,8 +89,8 @@ public class ExampleRestAPI implements AbstractRestApi<ExampleId, ExampleAO, Exa
         }
     }
 
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
-    public ReplyObject deleteExample(@PathVariable(value = "id") String id) {
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody ReplyObject deleteExample(@PathVariable(value = "id") String id) {
         try {
             return ReplyObject.success("example", remove(new ExampleId(id)));
         } catch (RestApiException e) {
@@ -98,8 +99,8 @@ public class ExampleRestAPI implements AbstractRestApi<ExampleId, ExampleAO, Exa
         }
     }
 
-    @RequestMapping(value = "/deleteAll", method = RequestMethod.DELETE)
-    public ReplyObject deleteAllExamples() {
+    @RequestMapping(value = "/deleteAll", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody ReplyObject deleteAllExamples() {
         try {
             return ReplyObject.success("example", removeAll());
         } catch (RestApiException e) {
