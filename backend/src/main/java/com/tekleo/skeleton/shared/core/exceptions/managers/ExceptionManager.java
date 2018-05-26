@@ -1,4 +1,4 @@
-package com.tekleo.skeleton.shared.core.exceptions;
+package com.tekleo.skeleton.shared.core.exceptions.managers;
 
 /**
  * Exception managers will provide a factory-like way of creating exceptions

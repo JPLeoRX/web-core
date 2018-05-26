@@ -4,7 +4,7 @@ import com.tekleo.skeleton.shared.core.objects.id.AbstractId;
 import com.tekleo.skeleton.shared.core.converters.AbstractConverterAOtoBO;
 import com.tekleo.skeleton.shared.core.converters.AbstractConverterBOtoAO;
 import com.tekleo.skeleton.shared.core.exceptions.ApiException;
-import com.tekleo.skeleton.shared.core.exceptions.ExceptionManager;
+import com.tekleo.skeleton.shared.core.exceptions.managers.ExceptionManager;
 import com.tekleo.skeleton.shared.core.exceptions.ServiceException;
 import com.tekleo.skeleton.shared.core.objects.AbstractAO;
 import com.tekleo.skeleton.shared.core.objects.AbstractBO;

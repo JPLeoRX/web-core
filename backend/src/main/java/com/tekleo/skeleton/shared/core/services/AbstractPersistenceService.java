@@ -3,7 +3,7 @@ package com.tekleo.skeleton.shared.core.services;
 import com.tekleo.skeleton.shared.core.objects.id.AbstractId;
 import com.tekleo.skeleton.shared.core.converters.AbstractConverterBOtoDO;
 import com.tekleo.skeleton.shared.core.converters.AbstractConverterDOtoBO;
-import com.tekleo.skeleton.shared.core.exceptions.ExceptionManager;
+import com.tekleo.skeleton.shared.core.exceptions.managers.ExceptionManager;
 import com.tekleo.skeleton.shared.core.exceptions.PersistenceServiceException;
 import com.tekleo.skeleton.shared.core.objects.AbstractBO;
 import com.tekleo.skeleton.shared.core.objects.AbstractDO;

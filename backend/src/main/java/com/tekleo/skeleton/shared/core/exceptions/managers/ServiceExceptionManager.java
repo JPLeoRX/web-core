@@ -1,5 +1,6 @@
-package com.tekleo.skeleton.shared.core.exceptions;
+package com.tekleo.skeleton.shared.core.exceptions.managers;
 
+import com.tekleo.skeleton.shared.core.exceptions.ServiceException;
 import org.springframework.stereotype.Service;
 
 /**
