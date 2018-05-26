@@ -1,6 +1,6 @@
 package com.tekleo.skeleton.shared.core.services;
 
-import com.tekleo.skeleton.shared.core.AbstractId;
+import com.tekleo.skeleton.shared.core.objects.id.AbstractId;
 import com.tekleo.skeleton.shared.core.converters.AbstractConverterAOtoRO;
 import com.tekleo.skeleton.shared.core.converters.AbstractConverterFOtoAO;
 import com.tekleo.skeleton.shared.core.converters.AbstractConverterROtoAO;
@@ -68,6 +68,21 @@ public interface AbstractRestApi<I extends AbstractId, A extends AbstractAO<I>, 
     default R get(I id) throws RestApiException {
         try {
             return getAOtoROConverter().toRO(getApi().get(id));
+        } catch (ApiException e) {
+            throw getExceptionManager().create(e);
+        }
+    }
+
+    /**
+     * Get all item from the database that have a given value in them
+     * @param columnName name of the column in which we should look for this value
+     * @param value value
+     * @return list of items
+     * @throws RestApiException if {@link ApiException} occurred
+     */
+    default List<R> getByProperty(String columnName, String value) throws RestApiException {
+        try {
+            return getAOtoROConverter().toRO(getApi().getByProperty(columnName, value));
         } catch (ApiException e) {
             throw getExceptionManager().create(e);
         }

@@ -1,6 +1,6 @@
 package com.tekleo.skeleton.shared.core.services;
 
-import com.tekleo.skeleton.shared.core.AbstractId;
+import com.tekleo.skeleton.shared.core.objects.id.AbstractId;
 import com.tekleo.skeleton.shared.core.exceptions.ExceptionManager;
 import com.tekleo.skeleton.shared.core.exceptions.PersistenceServiceException;
 import com.tekleo.skeleton.shared.core.exceptions.ServiceException;
@@ -44,6 +44,21 @@ public interface AbstractService<I extends AbstractId, B extends AbstractBO<I>, 
     default B get(I id) throws ServiceException {
         try {
             return getPersistenceService().get(id);
+        } catch (PersistenceServiceException e) {
+            throw getExceptionManager().create(e);
+        }
+    }
+
+    /**
+     * Get all item from the database that have a given value in them
+     * @param columnName name of the column in which we should look for this value
+     * @param value value
+     * @return list of items
+     * @throws ServiceException if {@link PersistenceServiceException} occurred
+     */
+    default List<B> getByProperty(String columnName, String value) throws ServiceException {
+        try {
+            return getPersistenceService().getByProperty(columnName, value);
         } catch (PersistenceServiceException e) {
             throw getExceptionManager().create(e);
         }

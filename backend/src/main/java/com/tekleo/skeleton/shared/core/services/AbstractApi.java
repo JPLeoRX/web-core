@@ -1,6 +1,6 @@
 package com.tekleo.skeleton.shared.core.services;
 
-import com.tekleo.skeleton.shared.core.AbstractId;
+import com.tekleo.skeleton.shared.core.objects.id.AbstractId;
 import com.tekleo.skeleton.shared.core.converters.AbstractConverterAOtoBO;
 import com.tekleo.skeleton.shared.core.converters.AbstractConverterBOtoAO;
 import com.tekleo.skeleton.shared.core.exceptions.ApiException;
@@ -60,6 +60,21 @@ public interface AbstractApi<I extends AbstractId, B extends AbstractBO<I>, A ex
     default A get(I id) throws ApiException {
         try {
             return getBOtoAOConverter().toAO(getService().get(id));
+        } catch (ServiceException e) {
+            throw getExceptionManager().create(e);
+        }
+    }
+
+    /**
+     * Get all item from the database that have a given value in them
+     * @param columnName name of the column in which we should look for this value
+     * @param value value
+     * @return list of items
+     * @throws ApiException if {@link ServiceException} occurred
+     */
+    default List<A> getByProperty(String columnName, String value) throws ApiException {
+        try {
+            return getBOtoAOConverter().toAO(getService().getByProperty(columnName, value));
         } catch (ServiceException e) {
             throw getExceptionManager().create(e);
         }

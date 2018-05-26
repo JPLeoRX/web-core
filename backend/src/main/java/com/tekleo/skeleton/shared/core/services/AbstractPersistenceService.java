@@ -1,6 +1,6 @@
 package com.tekleo.skeleton.shared.core.services;
 
-import com.tekleo.skeleton.shared.core.AbstractId;
+import com.tekleo.skeleton.shared.core.objects.id.AbstractId;
 import com.tekleo.skeleton.shared.core.converters.AbstractConverterBOtoDO;
 import com.tekleo.skeleton.shared.core.converters.AbstractConverterDOtoBO;
 import com.tekleo.skeleton.shared.core.exceptions.ExceptionManager;
@@ -85,6 +85,30 @@ public interface AbstractPersistenceService<I extends AbstractId, D extends Abst
 
         // Convert to BO
         return getDOtoBOConverter().toBO(found);
+    }
+
+    /**
+     * Get all item from the database that have a given value in them
+     * @param columnName name of the column in which we should look for this value
+     * @param value value
+     * @return list of items
+     * @throws PersistenceServiceException
+     */
+    default List<B> getByProperty(String columnName, String value) throws PersistenceServiceException {
+        // Check for null arguments
+        if (columnName == null || columnName.isEmpty())
+            throw getExceptionManager().create("Column name is null or empty");
+        if (value == null || value.isEmpty())
+            throw getExceptionManager().create("Column value is null or empty");
+
+        // Create a query
+        TypedQuery<D> query = getEntityManager().createQuery("FROM " + getDatabaseObjectClass().getName() + " WHERE " + columnName + " ='" + value + "'", getDatabaseObjectClass());
+
+        // Execute it, store results as DO
+        List<D> results = query.getResultList();
+
+        // Convert results to BO
+        return getDOtoBOConverter().toBO(results);
     }
 
     /**
