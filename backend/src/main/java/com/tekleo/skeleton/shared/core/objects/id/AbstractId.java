@@ -11,7 +11,7 @@ import java.util.Objects;
  * @author Leo Ertuna
  * @since 24.03.2018 13:54
  */
-public abstract class AbstractId implements Serializable {
+public abstract class AbstractId implements Serializable, Comparable<AbstractId> {
     private String internalId;
 
     // Constructors
@@ -47,6 +47,11 @@ public abstract class AbstractId implements Serializable {
 
     // Others
     //------------------------------------------------------------------------------------------------------------------
+    @Override
+    public int compareTo(AbstractId o) {
+        return this.getInternalId().compareTo(o.getInternalId());
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
