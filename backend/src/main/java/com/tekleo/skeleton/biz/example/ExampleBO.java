@@ -1,6 +1,7 @@
 package com.tekleo.skeleton.biz.example;
 
 import com.tekleo.skeleton.shared.core.objects.AbstractBO;
+import com.tekleo.skeleton.shared.core.objects.properties.HasDateCreated;
 import com.tekleo.skeleton.shared.id.ExampleId;
 
 import java.sql.Timestamp;
@@ -13,7 +14,7 @@ import java.sql.Timestamp;
  * @author Leo Ertuna
  * @since 24.03.2018 13:59
  */
-public class ExampleBO implements AbstractBO<ExampleId> {
+public class ExampleBO implements AbstractBO<ExampleId>, HasDateCreated<Timestamp> {
     private ExampleId exampleId;
     private String text;
     private Timestamp createdAt;

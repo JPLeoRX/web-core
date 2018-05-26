@@ -1,6 +1,7 @@
 package com.tekleo.skeleton.api.example;
 
 import com.tekleo.skeleton.shared.core.objects.AbstractAO;
+import com.tekleo.skeleton.shared.core.objects.properties.HasDateCreated;
 import com.tekleo.skeleton.shared.id.ExampleId;
 
 import java.sql.Timestamp;
@@ -14,7 +15,7 @@ import java.sql.Timestamp;
  * @author Leo Ertuna
  * @since 24.03.2018 15:32
  */
-public class ExampleAO implements AbstractAO<ExampleId> {
+public class ExampleAO implements AbstractAO<ExampleId>, HasDateCreated<Timestamp> {
     private ExampleId exampleId;
     private String text;
     private Timestamp createdAt;
