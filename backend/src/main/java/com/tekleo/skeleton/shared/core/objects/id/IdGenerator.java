@@ -1,4 +1,4 @@
-package com.tekleo.skeleton.shared.core;
+package com.tekleo.skeleton.shared.core.objects.id;
 
 import java.util.UUID;
 

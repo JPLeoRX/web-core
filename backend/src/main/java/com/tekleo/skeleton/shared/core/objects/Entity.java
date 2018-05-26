@@ -1,6 +1,6 @@
 package com.tekleo.skeleton.shared.core.objects;
 
-import com.tekleo.skeleton.shared.core.AbstractId;
+import com.tekleo.skeleton.shared.core.objects.id.AbstractId;
 
 import java.io.Serializable;
 

@@ -1,7 +1,7 @@
 package com.tekleo.skeleton.shared.core.objects;
 
 
-import com.tekleo.skeleton.shared.core.AbstractId;
+import com.tekleo.skeleton.shared.core.objects.id.AbstractId;
 
 /**
  * This is the parent class for all Form Objects
