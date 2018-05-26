@@ -11,7 +11,15 @@ import com.tekleo.skeleton.shared.core.objects.id.AbstractId;
  * @since 17.05.2018 14:44
  */
 public interface AbstractRO<I extends AbstractId> extends Entity<I> {
+    /**
+     * Getter for id
+     * @return
+     */
     String getId();
 
+    /**
+     * Setter for id
+     * @param newId
+     */
     void setId(String newId);
 }
