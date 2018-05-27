@@ -20,6 +20,6 @@ import java.io.Serializable;
  * @author Leo Ertuna
  * @since 17.05.2018 12:54
  */
-public interface Converter<From, To> extends Serializable {
+interface Converter<From, To> extends Serializable {
 
 }
