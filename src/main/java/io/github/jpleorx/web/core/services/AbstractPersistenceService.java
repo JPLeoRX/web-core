@@ -69,7 +69,7 @@ public interface AbstractPersistenceService<I extends AbstractId, D extends Abst
      * Get an item from the database by its ID
      * @param id id
      * @return item
-     * @throws PersistenceServiceException
+     * @throws PersistenceServiceException if some error occurred
      */
     default B get(I id) throws PersistenceServiceException {
         // Check for null arguments
@@ -92,7 +92,7 @@ public interface AbstractPersistenceService<I extends AbstractId, D extends Abst
      * @param columnName name of the column in which we should look for this value
      * @param value value
      * @return list of items
-     * @throws PersistenceServiceException
+     * @throws PersistenceServiceException if some error occurred
      */
     default List<B> getByProperty(String columnName, String value) throws PersistenceServiceException {
         // Check for null arguments
@@ -114,7 +114,7 @@ public interface AbstractPersistenceService<I extends AbstractId, D extends Abst
     /**
      * Get all items from the database
      * @return list of all items
-     * @throws PersistenceServiceException
+     * @throws PersistenceServiceException if some error occurred
      */
     default List<B> getAll() throws PersistenceServiceException {
         // Create a query
@@ -131,7 +131,7 @@ public interface AbstractPersistenceService<I extends AbstractId, D extends Abst
      * Add item to the database
      * @param newItem item to add
      * @return added item
-     * @throws PersistenceServiceException
+     * @throws PersistenceServiceException if some error occurred
      */
     default B add(B newItem) throws PersistenceServiceException {
         // Check for null arguments
@@ -152,7 +152,7 @@ public interface AbstractPersistenceService<I extends AbstractId, D extends Abst
      * Save updated item in the database
      * @param updatedItem item to update
      * @return updated item
-     * @throws PersistenceServiceException
+     * @throws PersistenceServiceException if some error occurred
      */
     default B update(B updatedItem) throws PersistenceServiceException {
         // Check for null arguments
@@ -180,7 +180,7 @@ public interface AbstractPersistenceService<I extends AbstractId, D extends Abst
      * Remove item from the database
      * @param removedItem item to remove
      * @return removed item
-     * @throws PersistenceServiceException
+     * @throws PersistenceServiceException if some error occurred
      */
     default B remove(B removedItem) throws PersistenceServiceException {
         // Check for null arguments
@@ -204,16 +204,13 @@ public interface AbstractPersistenceService<I extends AbstractId, D extends Abst
     /**
      * Remove all items of this entity from the database
      * @return number of removed items
-     * @throws PersistenceServiceException
+     * @throws PersistenceServiceException if some error occurred
      */
     default int removeAll() throws PersistenceServiceException {
         // Create a query
         Query query = getEntityManager().createQuery("DELETE FROM " + getDatabaseObjectClass().getName());
 
-        // Execute it, store the number of deleted items
-        int numberOfRemovedItems = query.executeUpdate();
-
-        // Return count
-        return numberOfRemovedItems;
+        // Execute it, and return the number of deleted items
+        return query.executeUpdate();
     }
 }
