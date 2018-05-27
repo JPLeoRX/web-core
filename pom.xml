@@ -3,16 +3,13 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.tekleo</groupId>
-	<artifactId>skeleton-parent</artifactId>
+	<groupId>io.github.jpleorx</groupId>
+	<artifactId>web-core</artifactId>
 	<version>1.0-SNAPSHOT</version>
-	<packaging>pom</packaging>
+	<packaging>jar</packaging>
 
-	<name>Skeleton - Parent</name>
-	<description>
-		Skeleton for web-app which consists of backend as Spring Boot app and frontend as Angular 5 app
-		Web + JPA + PostgreSQL + Flyway
-	</description>
+	<name>Web-Core</name>
+	<description>Core logic of Java web-applications</description>
 
 	<developers>
 		<developer>
@@ -21,23 +18,74 @@
 		</developer>
 	</developers>
 
-	<!-- Spring Boot Parent -->
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.0.0.RELEASE</version>
-		<relativePath/>
-	</parent>
-
-	<!-- Project Properties -->
+	<!-- Properties -->
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
+        <maven-compiler-plugin.version>3.5.1</maven-compiler-plugin.version>
+        <junit.version>4.12</junit.version>
+        <springframework.version>5.0.4.RELEASE</springframework.version>
+        <hibernate.version>1.0.0.Final</hibernate.version>
+        <javax.transaction.version>1.2</javax.transaction.version>
 	</properties>
 
-	<!-- Project Modules -->
-	<modules>
-		<module>backend</module>
-	</modules>
+    <!-- Dependencies -->
+    <dependencies>
+        <!-- JUnit -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+            <version>${junit.version}</version>
+        </dependency>
+
+        <!-- Spring Framework - Beans (support for @Autowired) -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-beans</artifactId>
+            <version>${springframework.version}</version>
+        </dependency>
+
+        <!-- Spring Framework - Context (support for @Service) -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${springframework.version}</version>
+        </dependency>
+
+        <!-- Hibernate - Javax Persistence (support for EntityManager, Query, TypedQuery) -->
+        <dependency>
+            <groupId>org.hibernate.javax.persistence</groupId>
+            <artifactId>hibernate-jpa-2.1-api</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+
+        <!-- Javax Transaction (support for @Transactional) -->
+        <dependency>
+            <groupId>javax.transaction</groupId>
+            <artifactId>javax.transaction-api</artifactId>
+            <version>${javax.transaction.version}</version>
+        </dependency>
+    </dependencies>
+
+    <!-- Build -->
+    <build>
+        <!-- Final Name -->
+        <finalName>Web-Core</finalName>
+
+        <!-- Plugins -->
+        <plugins>
+            <!-- Maven Compiler -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin.version}</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
