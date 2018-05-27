@@ -8,45 +8,50 @@ import java.util.Objects;
  *
  * Extend any IDs from this class, for most use cases it doesn't need any changes
  *
+ * This object must be immutable, hash code is generated in constructor
+ *
  * @author Leo Ertuna
  * @since 24.03.2018 13:54
  */
 public abstract class AbstractId implements Serializable, Comparable<AbstractId> {
-    private String internalId;
-
-    // Constructors
-    //------------------------------------------------------------------------------------------------------------------
     /**
-     * Create an ID from a given internal id string
-     * @param internalId
+     * Internal ID string, also a string representation of this ID
      */
-    public AbstractId(String internalId) {
+    private final String internalId;
+
+    /**
+     * Stored hashCode of {@link AbstractId#internalId}
+     */
+    private final int hashCode;
+
+    /**
+     * Main constructor
+     * Creates an ID from a given internal id string
+     * @param internalId id as string
+     */
+    protected AbstractId(String internalId) {
         if (internalId == null || internalId.isEmpty())
             throw new IllegalArgumentException();
         this.internalId = internalId;
+        this.hashCode = internalId.hashCode();
     }
 
     /**
-     * Create an ID with a newly generated internal id string
+     * Shortened constructor
+     * Creates an ID with a newly generated internal id string
      */
-    public AbstractId() {
+    protected AbstractId() {
         this(IdGenerator.generateUniqueRandomId());
     }
-    //------------------------------------------------------------------------------------------------------------------
 
-
-
-    // Getters
-    //------------------------------------------------------------------------------------------------------------------
+    /**
+     * Getter
+     * @return id as string
+     */
     public String getInternalId() {
         return internalId;
     }
-    //------------------------------------------------------------------------------------------------------------------
 
-
-
-    // Others
-    //------------------------------------------------------------------------------------------------------------------
     @Override
     public int compareTo(AbstractId o) {
         return this.getInternalId().compareTo(o.getInternalId());
@@ -62,12 +67,11 @@ public abstract class AbstractId implements Serializable, Comparable<AbstractId>
 
     @Override
     public int hashCode() {
-        return Objects.hash(internalId);
+        return hashCode;
     }
 
     @Override
     public String toString() {
         return internalId;
     }
-    //------------------------------------------------------------------------------------------------------------------
 }
