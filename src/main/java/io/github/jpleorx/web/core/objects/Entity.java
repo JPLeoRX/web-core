@@ -16,6 +16,6 @@ import java.io.Serializable;
  * @author Leo Ertuna
  * @since 17.05.2018 14:44
  */
-public interface Entity<I extends AbstractId> extends Serializable {
+interface Entity<I extends AbstractId> extends Serializable {
 
 }
