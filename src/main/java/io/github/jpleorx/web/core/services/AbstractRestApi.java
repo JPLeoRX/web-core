@@ -89,6 +89,66 @@ public interface AbstractRestApi<I extends AbstractId, A extends AbstractAO<I>, 
     }
 
     /**
+     * Get all item from the database that have a given value in them
+     * @param columnName name of the column in which we should look for this value
+     * @param value value
+     * @return list of items
+     * @throws RestApiException if {@link ApiException} occurred
+     */
+    default List<R> getByProperty(String columnName, Object value) throws RestApiException {
+        try {
+            return getAOtoROConverter().toRO(getApi().getByProperty(columnName, value));
+        } catch (ApiException e) {
+            throw getExceptionManager().create(e);
+        }
+    }
+
+    /**
+     * Get all item from the database that have a given value in them
+     * @param columnName name of the column in which we should look for this value
+     * @param value value
+     * @return list of items
+     * @throws RestApiException if {@link ApiException} occurred
+     */
+    default List<R> getByProperty(String columnName, long value) throws RestApiException {
+        try {
+            return getAOtoROConverter().toRO(getApi().getByProperty(columnName, value));
+        } catch (ApiException e) {
+            throw getExceptionManager().create(e);
+        }
+    }
+
+    /**
+     * Get all item from the database that have a given value in them
+     * @param columnName name of the column in which we should look for this value
+     * @param value value
+     * @return list of items
+     * @throws RestApiException if {@link ApiException} occurred
+     */
+    default List<R> getByProperty(String columnName, double value) throws RestApiException {
+        try {
+            return getAOtoROConverter().toRO(getApi().getByProperty(columnName, value));
+        } catch (ApiException e) {
+            throw getExceptionManager().create(e);
+        }
+    }
+
+    /**
+     * Get all item from the database that have a given value in them
+     * @param columnName name of the column in which we should look for this value
+     * @param value value
+     * @return list of items
+     * @throws RestApiException if {@link ApiException} occurred
+     */
+    default List<R> getByProperty(String columnName, boolean value) throws RestApiException {
+        try {
+            return getAOtoROConverter().toRO(getApi().getByProperty(columnName, value));
+        } catch (ApiException e) {
+            throw getExceptionManager().create(e);
+        }
+    }
+
+    /**
      * Get all items from the database
      * @return list of all items
      * @throws RestApiException if {@link ApiException} occurred

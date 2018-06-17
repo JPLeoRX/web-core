@@ -81,6 +81,66 @@ public interface AbstractApi<I extends AbstractId, B extends AbstractBO<I>, A ex
     }
 
     /**
+     * Get all item from the database that have a given value in them
+     * @param columnName name of the column in which we should look for this value
+     * @param value value
+     * @return list of items
+     * @throws ApiException if {@link ServiceException} occurred
+     */
+    default List<A> getByProperty(String columnName, Object value) throws ApiException {
+        try {
+            return getBOtoAOConverter().toAO(getService().getByProperty(columnName, value));
+        } catch (ServiceException e) {
+            throw getExceptionManager().create(e);
+        }
+    }
+
+    /**
+     * Get all item from the database that have a given value in them
+     * @param columnName name of the column in which we should look for this value
+     * @param value value
+     * @return list of items
+     * @throws ApiException if {@link ServiceException} occurred
+     */
+    default List<A> getByProperty(String columnName, long value) throws ApiException {
+        try {
+            return getBOtoAOConverter().toAO(getService().getByProperty(columnName, value));
+        } catch (ServiceException e) {
+            throw getExceptionManager().create(e);
+        }
+    }
+
+    /**
+     * Get all item from the database that have a given value in them
+     * @param columnName name of the column in which we should look for this value
+     * @param value value
+     * @return list of items
+     * @throws ApiException if {@link ServiceException} occurred
+     */
+    default List<A> getByProperty(String columnName, double value) throws ApiException {
+        try {
+            return getBOtoAOConverter().toAO(getService().getByProperty(columnName, value));
+        } catch (ServiceException e) {
+            throw getExceptionManager().create(e);
+        }
+    }
+
+    /**
+     * Get all item from the database that have a given value in them
+     * @param columnName name of the column in which we should look for this value
+     * @param value value
+     * @return list of items
+     * @throws ApiException if {@link ServiceException} occurred
+     */
+    default List<A> getByProperty(String columnName, boolean value) throws ApiException {
+        try {
+            return getBOtoAOConverter().toAO(getService().getByProperty(columnName, value));
+        } catch (ServiceException e) {
+            throw getExceptionManager().create(e);
+        }
+    }
+
+    /**
      * Get all items from the database
      * @return list of all items
      * @throws ApiException if {@link ServiceException} occurred
