@@ -65,6 +65,50 @@ public interface AbstractService<I extends AbstractId, B extends AbstractBO<I>, 
     }
 
     /**
+     * Get all item from the database that have a given value in them
+     * @param columnName name of the column in which we should look for this value
+     * @param value value
+     * @return list of items
+     * @throws ServiceException if {@link PersistenceServiceException} occurred
+     */
+    default List<B> getByProperty(String columnName, Object value) throws ServiceException {
+        return this.getByProperty(columnName, String.valueOf(value));
+    }
+
+    /**
+     * Get all item from the database that have a given value in them
+     * @param columnName name of the column in which we should look for this value
+     * @param value value
+     * @return list of items
+     * @throws ServiceException if {@link PersistenceServiceException} occurred
+     */
+    default List<B> getByProperty(String columnName, long value) throws ServiceException {
+        return this.getByProperty(columnName, Long.valueOf(value));
+    }
+
+    /**
+     * Get all item from the database that have a given value in them
+     * @param columnName name of the column in which we should look for this value
+     * @param value value
+     * @return list of items
+     * @throws ServiceException if {@link PersistenceServiceException} occurred
+     */
+    default List<B> getByProperty(String columnName, double value) throws ServiceException {
+        return this.getByProperty(columnName, Double.valueOf(value));
+    }
+
+    /**
+     * Get all item from the database that have a given value in them
+     * @param columnName name of the column in which we should look for this value
+     * @param value value
+     * @return list of items
+     * @throws ServiceException if {@link PersistenceServiceException} occurred
+     */
+    default List<B> getByProperty(String columnName, boolean value) throws ServiceException {
+        return this.getByProperty(columnName, Boolean.valueOf(value));
+    }
+
+    /**
      * Get all items from the database
      * @return list of all items
      * @throws ServiceException if {@link PersistenceServiceException} occurred
