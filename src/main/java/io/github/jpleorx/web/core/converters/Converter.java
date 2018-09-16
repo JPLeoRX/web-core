@@ -21,5 +21,12 @@ import java.io.Serializable;
  * @since 17.05.2018 12:54
  */
 interface Converter<From, To> extends Serializable {
-
+    /**
+     * If our collection is larger than this value - parallelized conversions will take place
+     * Override this method if you need to tweak performance
+     * @return
+     */
+    default int getParallelismThreshold() {
+        return 10000;
+    }
 }

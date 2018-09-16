@@ -3,6 +3,7 @@ package io.github.jpleorx.web.core.converters;
 import io.github.jpleorx.web.core.objects.AbstractAO;
 import io.github.jpleorx.web.core.objects.AbstractBO;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,6 +31,17 @@ public interface AbstractConverterBOtoAO<B extends AbstractBO, A extends Abstrac
      * @return list of api objects
      */
     default List<A> toAO(Collection<B> businessObjectsList) {
-        return businessObjectsList.parallelStream().map(this::toAO).collect(Collectors.toList());
+        // If it is greater than threshold size - run it through a parallel stream
+        if (businessObjectsList.size() > this.getParallelismThreshold()) {
+            return businessObjectsList.parallelStream().map(this::toAO).collect(Collectors.toList());
+        }
+
+        // If not - use classic for loop (it will run faster than single threaded stream)
+        else {
+            ArrayList<A> apiObjects = new ArrayList<>(businessObjectsList.size());
+            for (B businessObject : businessObjectsList)
+                apiObjects.add(this.toAO(businessObject));
+            return apiObjects;
+        }
     }
 }
