@@ -55,7 +55,7 @@ interface Converter<From, To> extends Serializable {
     /**
      * If our collection is larger than this value - parallelized conversions will take place
      * Override this method if you need to tweak performance
-     * @return
+     * @return parallelism threshold size
      */
     default int getParallelismThreshold() {
         return 10000;
